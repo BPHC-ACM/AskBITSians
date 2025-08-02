@@ -3,7 +3,7 @@ import './globals.css';
 
 export const metadata = {
   title: {
-    default: 'AskBITSians | Connect with BITS Alumni & Mentors',
+    default: 'AskBITSians | Connect with BITS Alumni',
     template: '%s | AskBITSians',
   },
 
@@ -23,14 +23,14 @@ export const metadata = {
   ],
 
   openGraph: {
-    title: 'AskBITSians | Connect with BITS Alumni & Mentors',
+    title: 'AskBITSians | Connect with BITS Alumni ',
     description:
       'Connect with successful BITS alumni and experienced mentors for career guidance and professional growth.',
     url: 'https://askbitsians.netlify.app',
     siteName: 'AskBITSians',
     images: [
       {
-        url: 'https://askbitsians.netlify.app/askbitsians-logo.png',
+        url: 'https://askbitsians.netlify.app/askbitsians-og.png',
         width: 512,
         height: 512,
       },
@@ -41,10 +41,10 @@ export const metadata = {
 
   twitter: {
     card: 'summary',
-    title: 'AskBITSians | Connect with BITS Alumni & Mentors',
+    title: 'AskBITSians | Connect with BITS Alumni ',
     description:
       'Connect with successful BITS alumni and experienced mentors for career guidance and professional growth.',
-    images: ['https://askbitsians.netlify.app/askbitsians-logo.png'],
+    images: ['https://askbitsians.netlify.app/askbitsians-og.png'],
   },
 
   robots: {
@@ -65,7 +65,7 @@ export default function RootLayout({ children }) {
           href='https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'
           rel='stylesheet'
         />
-        <title>AskBITSians | Connect with Alumni & Mentors</title>
+        <title>AskBITSians | Connect with Alumni </title>
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
         <link rel='icon' type='image/png' href='/askbitsians-icon.png' />
@@ -76,7 +76,7 @@ export default function RootLayout({ children }) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <meta
           name='description'
-          content='AskBITSians | Connect with Alumni & Mentors for Career Guidance'
+          content='AskBITSians | Connect with Alumni  for Career Guidance'
         />
         <meta
           name='keywords'

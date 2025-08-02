@@ -12,89 +12,99 @@ import pageStyles from '../page.module.css';
 import ScrollToTop from './ScrollToTop/scroll-to-top';
 
 export default function HomeContent() {
-	const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeSection, setActiveSection] = useState('dashboard');
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+  const { user, loading } = useUser();
 
-	const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
-	const [isMobile, setIsMobile] = useState(false);
-	const { user, loading } = useUser();
+  // Handle client-side hydration and set initial states
+  useEffect(() => {
+    setIsClient(true);
 
-	useEffect(() => {
-		const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-		checkMobile();
-		window.addEventListener('resize', checkMobile);
+    // Set initial states immediately to prevent flash
+    const isMobileView = window.innerWidth <= 768;
+    setIsMobile(isMobileView);
+    setIsSidebarExpanded(!isMobileView); // Expanded on desktop, collapsed on mobile
+  }, []);
 
-		return () => window.removeEventListener('resize', checkMobile);
-	}, []);
+  useEffect(() => {
+    if (!isClient) return; // Skip on server
 
-	const toggleSidebar = (forceState) => {
-		setIsSidebarExpanded((prevState) =>
-			typeof forceState === 'boolean' ? forceState : !prevState
-		);
-	};
+    const checkMobile = () => {
+      const isMobileView = window.innerWidth <= 768;
+      const wasMobile = isMobile;
 
-	const renderSection = () => {
-		if (loading) {
-			return (
-				<div style={{ padding: '2rem', textAlign: 'center' }}>
-					Loading user data...
-				</div>
-			);
-		}
+      setIsMobile(isMobileView);
 
-		switch (activeSection) {
-			case 'dashboard':
-				return (
-					<Section1
-						key='dashboard'
-						setActiveSection={setActiveSection}
-					/>
-				);
-			case 'messages':
-				return <Section3 key='messages' />;
-			case 'community':
-				return <Section4 key='community' />;
-			case 'resources':
-				return <Section5 key='resources' />;
-			case 'requests':
-				return <Section2 key='requests' />;
-			default:
-				return (
-					<Section1
-						key='dashboard'
-						setActiveSection={setActiveSection}
-					/>
-				);
-		}
-	};
+      // Only update sidebar expansion on actual screen size changes
+      // Don't change it during initial load to prevent flash
+      if (wasMobile !== isMobileView) {
+        if (!isMobileView && wasMobile) {
+          // Switched from mobile to desktop - expand sidebar
+          setIsSidebarExpanded(true);
+        } else if (isMobileView && !wasMobile) {
+          // Switched from desktop to mobile - collapse sidebar
+          setIsSidebarExpanded(false);
+        }
+      }
+    };
 
-	const getMainContentClass = () => {
-		if (isMobile) {
-			return pageStyles.mainMobile;
-		}
+    window.addEventListener('resize', checkMobile);
 
-		return isSidebarExpanded
-			? pageStyles.mainExpanded
-			: pageStyles.mainCollapsed;
-	};
+    return () => window.removeEventListener('resize', checkMobile);
+  }, [isClient, isMobile]);
 
-	return (
-		<div
-			className={`${pageStyles.content} ${
-				isMobile && isSidebarExpanded
-					? pageStyles.mobileSidebarOpen
-					: ''
-			}`}
-		>
-			<Sidebar
-				setActiveSection={setActiveSection}
-				activeSection={activeSection}
-				isExpanded={isSidebarExpanded}
-				toggleSidebar={toggleSidebar}
-			/>
-			<main className={`${pageStyles.main} ${getMainContentClass()}`}>
-				<AnimatePresence mode='wait'>{renderSection()}</AnimatePresence>
-				<ScrollToTop selector='main' dependency={activeSection} />
-			</main>
-		</div>
-	);
+  const toggleSidebar = (forceState) => {
+    setIsSidebarExpanded((prevState) =>
+      typeof forceState === 'boolean' ? forceState : !prevState
+    );
+  };
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'dashboard':
+        return <Section1 key='dashboard' setActiveSection={setActiveSection} />;
+      case 'messages':
+        return <Section3 key='messages' />;
+      case 'community':
+        return <Section4 key='community' />;
+      case 'resources':
+        return <Section5 key='resources' />;
+      case 'requests':
+        return <Section2 key='requests' />;
+      default:
+        return <Section1 key='dashboard' setActiveSection={setActiveSection} />;
+    }
+  };
+
+  const getMainContentClass = () => {
+    if (isMobile) {
+      return pageStyles.mainMobile;
+    }
+
+    return isSidebarExpanded
+      ? pageStyles.mainExpanded
+      : pageStyles.mainCollapsed;
+  };
+
+  return (
+    <div
+      className={`${pageStyles.content} ${
+        isMobile && isSidebarExpanded ? pageStyles.mobileSidebarOpen : ''
+      }`}
+    >
+      <Sidebar
+        setActiveSection={setActiveSection}
+        activeSection={activeSection}
+        isExpanded={isSidebarExpanded}
+        toggleSidebar={toggleSidebar}
+        loading={false} // Don't block sidebar rendering on user loading
+      />
+      <main className={`${pageStyles.main} ${getMainContentClass()}`}>
+        <AnimatePresence mode='wait'>{renderSection()}</AnimatePresence>
+        <ScrollToTop selector='main' dependency={activeSection} />
+      </main>
+    </div>
+  );
 }

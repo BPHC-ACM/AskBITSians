@@ -1,6 +1,7 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconSend } from '@tabler/icons-react';
+import { toast } from 'sonner';
 import styles from './chats_main.css';
 import { useState, useEffect, useRef } from 'react';
 
@@ -10,7 +11,13 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
   const [userName, setUserName] = useState('');
   const messagesContainerRef = useRef(null);
   const socketRef = useRef(null);
-  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 768);
+  const [isMobileView, setIsMobileView] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Handle client-side hydration
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
     if (messagesContainerRef.current) {
@@ -85,52 +92,84 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
       return;
     }
 
-    if (socketRef.current) {
-      socketRef.current.close();
-    }
+    let reconnectAttempts = 0;
+    const maxReconnectAttempts = 5;
+    const reconnectDelay = 3000;
 
-    const socket = new WebSocket('wss://askbitsians-websocket.onrender.com');
-    socketRef.current = socket;
-
-    socket.onopen = () => {
-      socket.send(
-        JSON.stringify({
-          type: 'join',
-          room: selectedRoom,
-        })
-      );
-    };
-
-    socket.onmessage = (event) => {
-      try {
-        const receivedMessage = JSON.parse(event.data);
-        if (receivedMessage.room === selectedRoom) {
-          setMessages((prevMessages) => {
-            const messageExists = prevMessages.some(
-              (msg) =>
-                msg.id === receivedMessage.id &&
-                msg.timestamp === receivedMessage.timestamp
-            );
-
-            if (messageExists) {
-              return prevMessages;
-            }
-            const newMessages = [...prevMessages, receivedMessage];
-            return sortMessagesByTimestamp(newMessages);
-          });
-        }
-      } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
+    const connectWebSocket = () => {
+      if (socketRef.current) {
+        socketRef.current.close();
       }
+
+      const socket = new WebSocket('wss://askbitsians-websocket.onrender.com');
+      socketRef.current = socket;
+
+      socket.onopen = () => {
+        console.log('WebSocket connected');
+        reconnectAttempts = 0;
+        socket.send(
+          JSON.stringify({
+            type: 'join',
+            room: selectedRoom,
+          })
+        );
+      };
+
+      socket.onmessage = (event) => {
+        try {
+          const receivedMessage = JSON.parse(event.data);
+          if (receivedMessage.room === selectedRoom) {
+            setMessages((prevMessages) => {
+              const messageExists = prevMessages.some((msg) => {
+                if (msg.tempId && receivedMessage.tempId === msg.tempId) {
+                  return true;
+                }
+                return (
+                  msg.id === receivedMessage.id &&
+                  msg.content === receivedMessage.content &&
+                  Math.abs(
+                    new Date(msg.timestamp).getTime() -
+                      new Date(receivedMessage.timestamp).getTime()
+                  ) < 1000
+                );
+              });
+
+              if (messageExists) {
+                return prevMessages;
+              }
+
+              const newMessages = [...prevMessages, receivedMessage];
+              return sortMessagesByTimestamp(newMessages);
+            });
+          }
+        } catch (error) {
+          console.error('Error parsing WebSocket message:', error);
+        }
+      };
+
+      socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+      };
+
+      socket.onclose = (event) => {
+        console.log('WebSocket closed:', event.code, event.reason);
+
+        // Attempt to reconnect if not intentionally closed and room is still selected
+        if (
+          selectedRoom &&
+          reconnectAttempts < maxReconnectAttempts &&
+          event.code !== 1000
+        ) {
+          reconnectAttempts++;
+          console.log(
+            `Attempting to reconnect... (${reconnectAttempts}/${maxReconnectAttempts})`
+          );
+          setTimeout(connectWebSocket, reconnectDelay);
+        }
+      };
     };
 
-    socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
-
-    socket.onclose = (event) => {
-      console.log('WebSocket closed:', event.code, event.reason);
-    };
+    connectWebSocket();
 
     return () => {
       if (socketRef.current) {
@@ -141,25 +180,29 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
   }, [selectedRoom]);
 
   useEffect(() => {
+    if (!isClient) return; // Skip on server
+
     const handleResize = () => {
       const newIsMobile = window.innerWidth <= 768;
       setIsMobileView(newIsMobile);
     };
 
+    handleResize(); // Set initial value
     window.addEventListener('resize', handleResize);
-    handleResize();
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [isClient]);
 
   const sendMessage = () => {
     if (newMessage.trim() === '' || !selectedRoom || !userId) return;
     const timestamp = new Date().toISOString();
+    const tempId = `temp-${Date.now()}-${Math.random()}`;
 
     const messageData = {
       room: selectedRoom,
       id: userId,
       content: newMessage,
       timestamp: timestamp,
+      tempId: tempId,
     };
 
     setMessages((prevMessages) => {
@@ -167,11 +210,18 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
       return sortMessagesByTimestamp(newMessages);
     });
     setNewMessage('');
+
     if (socketRef.current?.readyState === WebSocket.OPEN) {
-      socketRef.current.send(JSON.stringify(messageData));
+      socketRef.current.send(
+        JSON.stringify({
+          ...messageData,
+          type: 'message',
+        })
+      );
     } else {
       console.warn('WebSocket not open when sending message.');
     }
+
     fetch(`/api/chats/${selectedRoom}/messages`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -190,19 +240,28 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
               );
             });
         }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.message) {
+          setMessages((prevMessages) =>
+            prevMessages.map((msg) =>
+              msg.tempId === tempId
+                ? { ...data.message, tempId: undefined }
+                : msg
+            )
+          );
+        }
       })
       .catch((error) => {
         console.error('Error sending message via API:', error);
         setMessages((prevMessages) =>
-          sortMessagesByTimestamp(
-            prevMessages.filter(
-              (msg) =>
-                msg.timestamp !== messageData.timestamp ||
-                msg.id !== messageData.id
-            )
-          )
+          prevMessages.filter((msg) => msg.tempId !== tempId)
         );
-        alert('Failed to send message. Please try again.');
+        toast.error('Failed to send message', {
+          description: 'Please check your connection and try again.',
+          duration: 3000,
+        });
       });
   };
 

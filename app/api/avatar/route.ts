@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const avatarUrl = cleanedName
     ? `https://ui-avatars.com/api/?name=${encodeURIComponent(
         cleanedName
-      )}&background=91D6FC&color=eeeeee`
+      )}&background=91D6FC&color=222222`
     : 'https://www.svgrepo.com/show/507442/user-circle.svg';
 
   try {

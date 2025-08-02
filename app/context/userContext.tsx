@@ -8,6 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { supabase } from '@/utils/supabaseClient';
+import { toast } from 'sonner';
 
 interface User {
   email: string;
@@ -54,11 +55,48 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    if (!email.endsWith('bits-pilani.ac.in')) {
-      alert(`Unauthorized email: \n${email}`);
-      await supabase.auth.signOut();
-      setLoading(false);
-      return;
+    // Determine role based on email domain
+    let determinedRole: 'student' | 'alumnus' = 'student';
+
+    if (email.endsWith('@alumni.bits-pilani.ac.in')) {
+      determinedRole = 'alumnus';
+    } else {
+      // Student email formats:
+      // 1. f<batch><id>@<campus>.bits-pilani.ac.in (e.g., f20230064@hyderabad.bits-pilani.ac.in)
+      // 2. Any email ending with @<campus>.bits-pilani.ac.in (e.g., acm.bphc@hyderabad.bits-pilani.ac.in)
+      const validCampuses = ['hyderabad', 'pilani', 'goa', 'dubai'];
+      const emailParts = email.split('@');
+
+      if (emailParts.length === 2) {
+        const [localPart, domain] = emailParts;
+        const campusDomain = domain.replace('.bits-pilani.ac.in', '');
+
+        // Check if it's a valid student email domain
+        if (
+          validCampuses.includes(campusDomain) &&
+          domain === `${campusDomain}.bits-pilani.ac.in`
+        ) {
+          determinedRole = 'student';
+        } else {
+          toast.error(`Unauthorized email domain: ${email}`, {
+            description:
+              'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai',
+            duration: 6000,
+          });
+          await supabase.auth.signOut();
+          setLoading(false);
+          return;
+        }
+      } else {
+        toast.error(`Invalid email format: ${email}`, {
+          description:
+            'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai',
+          duration: 6000,
+        });
+        await supabase.auth.signOut();
+        setLoading(false);
+        return;
+      }
     }
 
     const name = (data.user.user_metadata?.full_name ?? 'Unknown')
@@ -66,29 +104,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       .split(' ')
       .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
-
-    let determinedRole: 'student' | 'alumnus' = 'student';
-    let alumnusInfo: { id: string; department: string | null } | null = null;
-
-    try {
-      const { data: alumnusData, error: alumnusCheckError } = await supabase
-        .from('alumni')
-        .select('id, areas_of_expertise')
-        .eq('email', email)
-        .maybeSingle();
-
-      if (alumnusCheckError) throw alumnusCheckError;
-
-      if (alumnusData) {
-        determinedRole = 'alumnus';
-        alumnusInfo = {
-          id: alumnusData.id,
-          department: alumnusData.areas_of_expertise?.[0] || null,
-        };
-      }
-    } catch (error) {
-      console.error('Unexpected error checking alumnus status:', error);
-    }
 
     const role = determinedRole;
     let userId: string | null = null;
@@ -99,7 +114,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await fetch('/api/user-sync', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, name }),
+          body: JSON.stringify({ email, name, role: 'student' }),
         });
 
         const studentData = await response.json();
@@ -110,14 +125,33 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         userId = studentData.id;
         identifier = studentData.identifier;
       } catch (e: any) {
-        console.error('Error during user sync:', e.message);
+        console.error('Error during student sync:', e.message);
         setUser(null);
         setLoading(false);
         return;
       }
-    } else if (role === 'alumnus' && alumnusInfo) {
-      userId = alumnusInfo.id;
-      identifier = alumnusInfo.department;
+    } else if (role === 'alumnus') {
+      try {
+        // Check if alumnus exists, if not create them
+        const response = await fetch('/api/user-sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, role: 'alumnus' }),
+        });
+
+        const alumnusData = await response.json();
+        if (!response.ok) {
+          throw new Error(alumnusData.error || 'Failed to sync alumnus data');
+        }
+
+        userId = alumnusData.id;
+        identifier = alumnusData.company || alumnusData.job_title || 'Alumni';
+      } catch (e: any) {
+        console.error('Error during alumni sync:', e.message);
+        setUser(null);
+        setLoading(false);
+        return;
+      }
     }
 
     setUser({

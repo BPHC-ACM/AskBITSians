@@ -1,4 +1,4 @@
-# AskBITSians - Connect with Alumni & Mentors 🎓
+# AskBITSians - Connect with Alumni 🎓
 
 A vibrant platform connecting BITS Pilani students with successful alumni and experienced mentors for career guidance, academic support, and professional networking.
 

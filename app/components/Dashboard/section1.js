@@ -51,25 +51,30 @@ const servicesData = [
 ];
 
 const useViewport = () => {
-  const [width, setWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 1200
-  );
+  const [width, setWidth] = useState(1200); // Default to desktop width for SSR
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    setIsClient(true);
+    setWidth(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    if (!isClient) return;
 
     const handleWindowResize = () => setWidth(window.innerWidth);
 
     window.addEventListener('resize', handleWindowResize);
     return () => window.removeEventListener('resize', handleWindowResize);
-  }, []);
+  }, [isClient]);
 
   return {
     width,
-    isMobile: width < 768,
-    isTablet: width >= 768 && width < 1099,
-    isLaptop: width >= 1099 && width < 1300,
-    isDesktop: width >= 1300,
+    isMobile: isClient ? width < 768 : false,
+    isTablet: isClient ? width >= 768 && width < 1099 : false,
+    isLaptop: isClient ? width >= 1099 && width < 1300 : true,
+    isDesktop: isClient ? width >= 1300 : true,
+    isClient,
   };
 };
 
@@ -123,8 +128,8 @@ export default function Section1({ setActiveSection }) {
   const styles = {
     header: {
       logoContainer: {
-        width: viewport.isMobile ? '70px' : '90px',
-        height: viewport.isMobile ? '70px' : '90px',
+        width: '90px',
+        height: '90px',
         marginBottom: '1rem',
         backgroundImage: 'url(/askbitsians-logo.png)',
         backgroundSize: 'contain',
@@ -479,9 +484,9 @@ export default function Section1({ setActiveSection }) {
           <motion.button
             onClick={handleScrollButtonClick}
             aria-label='Scroll down'
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 20, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 20, x: '-50%' }}
             transition={{ duration: 0.3, delay: 1.2 }}
             whileHover={{ scale: 1.1, y: -5 }}
             whileTap={{ scale: 0.95 }}
@@ -489,7 +494,6 @@ export default function Section1({ setActiveSection }) {
               position: 'absolute',
               bottom: '5vh',
               left: '50%',
-              transform: 'translateX(-50%)',
               background: 'transparent',
               color: colors.textMuted,
               border: `2px solid ${colors.textMuted}`,

@@ -30,7 +30,6 @@
 
 	.sidebar {
 		width: 100%;
-		height: auto;
 		border-right: none;
 		border-bottom: 1px solid #ddd;
 		min-height: 100vh; /* Full height sidebar */

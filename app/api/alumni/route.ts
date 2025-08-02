@@ -3,6 +3,7 @@ import { supabase } from '@/utils/supabaseClient';
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
+  const id = searchParams.get('id'); // For fetching specific alumni
   const domain = searchParams.get('domain'); // Changed from expertise
   const company = searchParams.get('company');
   const role = searchParams.get('role'); // New parameter for job roles
@@ -10,6 +11,11 @@ export async function GET(request) {
 
   try {
     let query = supabase.from('alumni').select('*');
+
+    // If ID is specified, fetch specific alumni
+    if (id) {
+      query = query.eq('id', id);
+    }
 
     if (domain) {
       query = query.contains('areas_of_expertise', [domain]);

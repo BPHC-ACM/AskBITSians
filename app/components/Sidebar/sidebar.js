@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useUser } from '@/context/userContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import UpdateProfileModal from './update-profile-modal';
+import UpdateAlumniProfileModal from './update-alumni-profile-modal';
 import { supabase } from '@/utils/supabaseClient';
 import LoginButton from '../loginbutton';
 import styles from './sidebar.module.css';
@@ -25,18 +26,30 @@ export default function Sidebar({
   activeSection,
   isExpanded,
   toggleSidebar,
+  loading: parentLoading,
 }) {
   const { user, loading: userLoading, refetchUser } = useUser();
   const [showUserActions, setShowUserActions] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  // Only show loading for user-specific features, not the entire sidebar
+  const isUserLoading = userLoading;
+
+  // Handle client-side hydration
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return; // Skip on server
+
     const checkMobile = () => setIsMobile(window.innerWidth <= 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  }, [isClient]);
 
   const handleClick = (sectionName) => {
     setActiveSection(sectionName);
@@ -271,7 +284,39 @@ export default function Sidebar({
               </motion.div>
             )}
           </AnimatePresence>
-          {user ? (
+          {isUserLoading ? (
+            <div className={styles.userContainer}>
+              <div className={styles.pillButton} style={{ cursor: 'default' }}>
+                <div
+                  className={styles.avatar}
+                  style={{
+                    backgroundColor: '#f3f4f6',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '12px',
+                    color: '#6b7280',
+                  }}
+                >
+                  ...
+                </div>
+                {isExpanded && (
+                  <motion.div
+                    className={styles.userInfo}
+                    variants={userDetailsVariants}
+                    animate={isExpanded ? 'expanded' : 'collapsed'}
+                    initial={false}
+                  >
+                    <span className={styles.name}>Loading...</span>
+                    <span className={styles.identifier}>Please wait</span>
+                  </motion.div>
+                )}
+              </div>
+            </div>
+          ) : user ? (
             <div className={styles.userContainer}>
               <button
                 className={styles.pillButton}
@@ -336,6 +381,14 @@ export default function Sidebar({
           isOpen={isUpdateModalOpen}
           onClose={handleCloseUpdateModal}
           studentId={user.id}
+          onUpdateSuccess={handleUpdateSuccess}
+        />
+      )}
+      {user?.role === 'alumnus' && user?.id && (
+        <UpdateAlumniProfileModal
+          isOpen={isUpdateModalOpen}
+          onClose={handleCloseUpdateModal}
+          alumniId={user.id}
           onUpdateSuccess={handleUpdateSuccess}
         />
       )}
