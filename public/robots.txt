@@ -1,0 +1,11 @@
+# Allow all user agents to crawl the site
+User-agent: *
+
+# Disallow crawling of the API endpoints
+Disallow: /api/
+
+# Allow crawling of everything else (this is the default behavior)
+Allow: /
+
+# Location of the sitemap
+Sitemap: https://askbitsians.netlify.app/sitemap.xml

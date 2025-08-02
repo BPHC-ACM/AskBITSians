@@ -1,0 +1,467 @@
+.sidebar {
+  background: linear-gradient(135deg, #1a202c 0%, #2d3748 50%, #1a202c 100%);
+  border-right: 3px solid #fdc939;
+  color: white;
+  height: 100%;
+  width: 5rem;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Poppins', serif;
+  padding: 1rem 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 250;
+  transition: width 0.3s ease-in-out;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar.expanded {
+  align-items: center;
+}
+
+.sidebar.collapsed {
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logoContainer {
+  padding: 0.5rem 0;
+  margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.logoContainer img {
+  display: block;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.navContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.navItemWrapper {
+  width: 90%;
+  border-radius: 2rem;
+  margin: 0.25rem 0;
+  overflow: hidden;
+  display: flex;
+}
+
+.navItem {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  text-align: left;
+  font-family: 'Poppins', serif;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-weight: 300;
+}
+
+.sidebar.collapsed .navItem {
+  justify-content: center;
+  padding: 0.75rem 0;
+}
+
+.navIcon {
+  min-width: 24px;
+  margin-right: 0;
+  transition: margin-right 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar.expanded .navIcon {
+  margin-right: 0.75rem;
+}
+
+.sidebar.expanded .navItem:not(.active):hover {
+  background-color: rgba(133, 197, 232, 0.15);
+  border-radius: 1rem;
+}
+
+.navItem.active {
+  font-weight: 500;
+  background-color: #fdc939;
+  color: #1a1a1a;
+  border-radius: 2rem;
+  box-shadow: 0 4px 12px rgba(253, 201, 57, 0.3);
+}
+
+.sidebar.collapsed .navItem.active {
+  background-color: #fdc939;
+  color: #1a1a1a;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  margin: 0.25rem auto;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(253, 201, 57, 0.3);
+}
+.sidebar.collapsed .navItem.active .navIcon {
+  margin-right: 0;
+}
+
+.sidebarFooter {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-bottom: 1rem;
+  height: 9rem;
+  margin-top: auto;
+  padding-top: 1rem;
+  position: relative;
+  @media screen and (max-width: 768px) {
+    padding-bottom: 5rem;
+  }
+}
+
+.userContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 0.5rem;
+}
+
+.pillButton {
+  background-color: #222;
+  border: none;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 6px 10px;
+  width: 100%;
+  position: relative;
+  text-align: left;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  transition: background-color 0.25s ease;
+  overflow: hidden;
+}
+
+.sidebar.collapsed .pillButton {
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  justify-content: center;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 0;
+  transition: margin 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar.expanded .avatar {
+  margin-right: 0.5rem;
+}
+
+.userInfo {
+  font-family: 'Poppins', sans-serif;
+  flex: 1;
+  margin-left: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.name,
+.identifier {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.identifier {
+  font-size: 0.8rem;
+  color: #ccc;
+  opacity: 0.7;
+}
+/* 
+.logoutButton {
+	align-self: center;
+	position: absolute;
+	bottom: calc(100% + 5px);
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #222;
+	border: none;
+	color: white;
+	font-size: 0.9rem;
+	cursor: pointer;
+	padding: 8px 12px;
+	width: auto;
+	white-space: nowrap;
+	text-align: left;
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	transition: all 0.25s ease;
+	z-index: 10;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.logoutButton:hover {
+	background-color: #333;
+}
+.logoutButton span {
+	margin-left: 0.4rem;
+}
+.logoutButton svg {
+	flex-shrink: 0;
+} */
+
+.desktopToggleButton {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, color 0.2s ease, position 0s,
+    bottom 0s, left 0s, transform 0s;
+
+  position: static;
+  margin-top: 0.75rem;
+}
+
+.desktopToggleButton:hover {
+  background: rgba(156, 156, 156, 0.1);
+  color: white;
+}
+
+.mobileToggleButton {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #1a1a1a;
+  cursor: pointer;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 300;
+  padding: 0.5rem;
+}
+
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 240;
+}
+
+.mobileSidebarCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.userActionContainer {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.5rem;
+  background-color: #282828;
+  padding: 6px;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  width: auto;
+  max-width: 90%;
+}
+
+.actionButton {
+  background-color: #3a3a3a;
+  border: none;
+  color: #e0e0e0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 6px 12px;
+  width: auto;
+  white-space: nowrap;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+}
+
+.actionButton:hover {
+  background-color: #4f4f4f;
+  color: #fff;
+}
+
+.actionButton svg {
+  flex-shrink: 0;
+}
+
+.sidebar.collapsed .userActionContainer {
+  display: none;
+}
+
+@media screen and (min-width: 769px) {
+  .mobileToggleButton,
+  .mobileOverlay {
+    display: none;
+  }
+
+  .sidebar.collapsed .desktopToggleButton {
+    position: absolute;
+    bottom: 1rem;
+
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0;
+  }
+
+  .sidebar.expanded .desktopToggleButton {
+    position: static;
+    transform: none;
+    margin-top: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .mobileToggleButton {
+    display: block;
+    height: 44px;
+  }
+
+  .sidebar {
+    width: 70%;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    height: 100%;
+    z-index: 250;
+    padding-top: 4rem;
+  }
+
+  .sidebar.expanded {
+    left: 0;
+    width: 70%;
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .sidebar.collapsed {
+    left: -100%;
+    box-shadow: none;
+  }
+
+  .mobileOverlay {
+    display: none;
+  }
+
+  .sidebar.expanded ~ .mobileOverlay,
+  .mobileOverlay.visible {
+    display: block;
+  }
+
+  .sidebar.collapsed .navItem,
+  .sidebar.expanded .navItem {
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
+  }
+
+  .sidebar.collapsed .navItem.active {
+    border-radius: 2rem;
+    width: auto;
+    height: auto;
+    margin: 0.25rem 0;
+    justify-content: flex-start;
+  }
+
+  .sidebar.expanded .navItemText {
+    opacity: 1;
+    display: inline;
+  }
+  .sidebar.collapsed .navItemText {
+    display: none;
+  }
+
+  .logoContainer img {
+    width: 130px;
+    height: auto;
+  }
+
+  .desktopToggleButton {
+    display: none;
+  }
+
+  .sidebar.expanded .pillButton {
+    width: 100%;
+    padding: 6px 10px;
+    justify-content: flex-start;
+  }
+  .sidebar.expanded .avatar {
+    margin-right: 0.5rem;
+  }
+  .sidebar.expanded .userInfo {
+    opacity: 1;
+  }
+
+  .sidebar.expanded .loginButton {
+    width: 100%;
+    padding: 6px 10px;
+    justify-content: flex-start;
+  }
+  .sidebar.expanded .loginButton .avatar {
+    margin-right: 0.5rem;
+  }
+  .sidebar.expanded .loginButton .userInfo {
+    display: flex;
+  }
+
+  .sidebarFooter {
+    justify-content: flex-end;
+  }
+}

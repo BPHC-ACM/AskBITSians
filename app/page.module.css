@@ -1,0 +1,49 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	background-color: #f8fafc;
+	color: black;
+}
+
+.content {
+	display: flex;
+	flex: 1;
+	overflow: hidden;
+	position: relative;
+}
+
+.main {
+	flex-grow: 1;
+	width: 100%;
+	font-family: 'Poppins', Arial, Helvetica, sans-serif;
+	overflow-y: auto;
+	transition: margin-left 0.3s ease-in-out;
+	position: relative;
+}
+
+.mainCollapsed {
+	margin-left: 80px;
+}
+.mainExpanded {
+	margin-left: 18%;
+}
+
+@media screen and (max-width: 768px) {
+  .main {
+    margin-left: 0 !important;
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 1299px) {
+  .main {
+    min-height: 110vh;
+  }
+}
+
+@media (max-width: 1099px) {
+  .main {
+    min-height: 125vh;
+  }
+}

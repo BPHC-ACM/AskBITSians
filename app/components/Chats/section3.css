@@ -1,0 +1,58 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+.chatsystem {
+	display: flex;
+	flex-direction: row;
+	min-height: 100vh; /* Ensure full height */
+}
+
+.loginbutton {
+	display: flex;
+	height: 98vh;
+	width: 100%;
+	align-items: center;
+	justify-content: center;
+}
+
+.pill {
+	width: 15rem;
+}
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+	.chatsystem {
+		flex-direction: column;
+		height: 100vh;
+		overflow: hidden; /* Prevent scrolling beyond viewport */
+	}
+
+	.sidebar {
+		width: 100%;
+		height: auto;
+		border-right: none;
+		border-bottom: 1px solid #ddd;
+		min-height: 100vh; /* Full height sidebar */
+	}
+
+	.chat-display {
+		width: 100%;
+	}
+
+	.pill {
+		width: 13rem;
+	}
+}
+
+@media (max-width: 1299px) {
+	.chatsystem {
+		min-height: 110vh;
+	}
+}
+
+@media (max-width: 1099px) {
+	.chatsystem {
+		min-height: 125vh;
+	}
+}
