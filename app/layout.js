@@ -82,7 +82,7 @@ export default function RootLayout({ children }) {
           name='keywords'
           content='AskBITSians, BITS Alumni, Mentorship Platform, Career Guidance'
         />
-        <meta name='author' content='AskBITSians Team' />
+        <meta name='author' content='ACM BPHC' />
       </head>
       <body>
         <Providers>{children}</Providers>

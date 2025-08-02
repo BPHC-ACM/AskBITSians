@@ -148,11 +148,11 @@ export default function TermsOfService() {
             If you have any questions about these Terms, please contact us:
           </p>
           <p style={{ ...styles.p, fontStyle: 'italic' }}>
-            AskBITSians Team
+            Association for Computing Machinery
             <br />
             Birla Institute of Technology and Science, Pilani, Hyderabad Campus
             <br />
-            Email: askbitsians@gmail.com
+            Email: acm.bphc@hyderabad.bits-pilani.ac.in
           </p>
         </section>
       </main>
@@ -183,8 +183,8 @@ export default function TermsOfService() {
               fontSize: '0.8rem',
             }}
           >
-            © {new Date().getFullYear()} AskBITSians, BITS Pilani Hyderabad
-            Campus. All Rights Reserved.
+            © {new Date().getFullYear()} Association for Computing Machinery,
+            BITS Pilani Hyderabad Campus. All Rights Reserved.
             <div style={{ marginTop: '1rem' }}>
               <Link
                 href='/'

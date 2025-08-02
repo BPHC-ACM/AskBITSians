@@ -124,7 +124,6 @@ export default function PrivacyPolicy() {
             connecting BITS Pilani students with alumni for mentorship and
             career guidance.
           </li>
-          {/* ... other definitions ... */}
         </ul>
 
         <h2 style={styles.h2}>Contact Us</h2>
@@ -132,9 +131,13 @@ export default function PrivacyPolicy() {
           If you have any questions about this Privacy Policy, You can contact
           us:
         </p>
-        <ul style={styles.ul}>
-          <li style={styles.li}>By email: askbitsians@gmail.com</li>
-        </ul>
+        <p style={{ ...styles.p, fontStyle: 'italic' }}>
+          Association for Computing Machinery
+          <br />
+          Birla Institute of Technology and Science, Pilani, Hyderabad Campus
+          <br />
+          Email: acm.bphc@hyderabad.bits-pilani.ac.in
+        </p>
       </main>
 
       <footer style={styles.footer}>
