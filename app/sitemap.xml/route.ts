@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const baseUrl = 'https://askbitsians.netlify.app';
+  const baseUrl = 'https://askbitsians.acmbphc.in';
 
   const staticPages = ['/', '/terms-of-service', '/privacy-policy'];
 

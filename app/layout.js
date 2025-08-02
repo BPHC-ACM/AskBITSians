@@ -26,11 +26,11 @@ export const metadata = {
     title: 'AskBITSians | Connect with BITS Alumni ',
     description:
       'Connect with successful BITS alumni and experienced mentors for career guidance and professional growth.',
-    url: 'https://askbitsians.netlify.app',
+    url: 'https://askbitsians.acmbphc.in',
     siteName: 'AskBITSians',
     images: [
       {
-        url: 'https://askbitsians.netlify.app/askbitsians-og.png',
+        url: 'https://askbitsians.acmbphc.in/askbitsians-og.png',
         width: 512,
         height: 512,
       },
@@ -44,7 +44,7 @@ export const metadata = {
     title: 'AskBITSians | Connect with BITS Alumni ',
     description:
       'Connect with successful BITS alumni and experienced mentors for career guidance and professional growth.',
-    images: ['https://askbitsians.netlify.app/askbitsians-og.png'],
+    images: ['https://askbitsians.acmbphc.in/askbitsians-og.png'],
   },
 
   robots: {

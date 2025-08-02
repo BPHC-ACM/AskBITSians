@@ -8,4 +8,4 @@ Disallow: /api/
 Allow: /
 
 # Location of the sitemap
-Sitemap: https://askbitsians.netlify.app/sitemap.xml
+Sitemap: https://askbitsians.acmbphc.in/sitemap.xml
