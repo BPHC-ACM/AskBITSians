@@ -95,22 +95,22 @@ export default function Sidebar({
       sectionId: 'community',
     },
     {
-      name: user?.role === 'consultant' ? 'Mentoring Requests' : 'Resources',
+      name: user?.role === 'alumnus' ? 'Mentoring Requests' : 'Resources',
       icon:
-        user?.role === 'consultant' ? (
+        user?.role === 'alumnus' ? (
           <IconBubbleText size={24} className={styles.navIcon} />
         ) : (
           <IconBooks size={24} className={styles.navIcon} />
         ),
-      sectionId: user?.role === 'consultant' ? 'requests' : 'resources',
+      sectionId: user?.role === 'alumnus' ? 'requests' : 'resources',
     },
   ];
 
   const visibleSections = sections.filter((section) => {
-    if (section.sectionId === 'requests' && user?.role !== 'consultant') {
+    if (section.sectionId === 'requests' && user?.role !== 'alumnus') {
       return false;
     }
-    if (section.sectionId === 'resources' && user?.role === 'consultant') {
+    if (section.sectionId === 'resources' && user?.role === 'alumnus') {
       return false;
     }
     return true;

@@ -1,17 +1,19 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/utils/supabaseClient';
 
+// Get all available categories for filtering alumni
 export async function GET() {
   try {
     const { data: alumni, error } = await supabase
       .from('alumni')
-      .select('areas_of_expertise, company, job_title');
+      .select('areas_of_expertise, company, job_title, graduation_year');
 
     if (error) throw error;
 
-    const domains = new Set(); // Changed from 'expertise'
+    const domains = new Set();
     const companies = new Set();
-    const roles = new Set(); // New: job roles/titles
+    const roles = new Set();
+    const years = new Set();
 
     alumni.forEach((alumnus) => {
       if (alumnus.areas_of_expertise) {
@@ -23,15 +25,19 @@ export async function GET() {
       if (alumnus.job_title) {
         roles.add(alumnus.job_title);
       }
+      if (alumnus.graduation_year) {
+        years.add(alumnus.graduation_year);
+      }
     });
 
     return NextResponse.json({
-      domains: Array.from(domains).sort(), // Changed from 'expertise'
+      domains: Array.from(domains).sort(),
       companies: Array.from(companies).sort(),
-      roles: Array.from(roles).sort(), // New field
+      roles: Array.from(roles).sort(),
+      graduationYears: Array.from(years).sort((a: any, b: any) => b - a), // Sort years descending
     });
   } catch (error) {
-    console.error('Error fetching domains, companies, and roles:', error);
+    console.error('Error fetching alumni categories:', error);
     return NextResponse.json(
       { error: 'Failed to fetch alumni categories' },
       { status: 500 }

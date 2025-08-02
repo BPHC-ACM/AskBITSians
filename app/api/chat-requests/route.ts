@@ -134,13 +134,13 @@ export async function POST(req) {
 
       await sendEmail(
         alumnusEmail,
-        'New Mentorship Request Received',
+        'New Student Query - AskBITSians',
         `
-        <h2>New Mentorship Request</h2>
-        <p>${studentName} has submitted a mentorship request.</p>
+        <h2>New Student Query</h2>
+        <p>${studentName} has reached out to you through AskBITSians.</p>
         <h3>Subject: ${subject}</h3>
         <p><strong>Details:</strong> ${details}</p>
-        <p>Please log in to AskBITSians to accept or decline this request.</p>
+        <p>Please log in to AskBITSians to accept or decline this request and help a fellow BITSian!</p>
         `
       );
     }
@@ -227,21 +227,21 @@ export async function PATCH(req) {
       const alumnusName = alumnusData.name || 'The alumnus';
       const subject = requestData?.subject || 'your mentorship request';
 
-      const emailSubject = `Your Mentorship Request was ${
+      const emailSubject = `Your Query was ${
         status.charAt(0).toUpperCase() + status.slice(1)
-      }`;
+      } - AskBITSians`;
       const emailHtml =
         status === 'accepted'
           ? `
-          <h2>Request Accepted</h2>
-          <p>${alumnusName} has <strong>accepted</strong> your mentorship request about "${subject}".</p>
-          <p>You can now chat with your mentor through the messaging system on AskBITSians.</p>
-          <p>Log in to access your mentorship chat.</p>
+          <h2>Query Accepted</h2>
+          <p>${alumnusName} has <strong>accepted</strong> your query about "${subject}".</p>
+          <p>You can now chat with them through the messaging system on AskBITSians.</p>
+          <p>Log in to start your conversation and get the guidance you need!</p>
           `
           : `
-          <h2>Request Declined</h2>
-          <p>${alumnusName} has <strong>declined</strong> your mentorship request about "${subject}".</p>
-          <p>You may submit a new request or try with a different alumni mentor.</p>
+          <h2>Query Declined</h2>
+          <p>${alumnusName} has <strong>declined</strong> your query about "${subject}".</p>
+          <p>Don't worry! You can try reaching out to other alumni or post your question in the community forum.</p>
           `;
 
       await sendEmail(studentEmail, emailSubject, emailHtml);

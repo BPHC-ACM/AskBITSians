@@ -10,10 +10,10 @@ export default function Section5() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchConsultants = async () => {
+    const fetchAlumni = async () => {
       try {
         setLoading(true);
-        const response = await fetch('/api/consultants?type=all');
+        const response = await fetch('/api/alumni?type=all');
 
         if (!response.ok) {
           throw new Error(`API request failed with status ${response.status}`);
@@ -23,14 +23,14 @@ export default function Section5() {
         setProfsData(data);
         setError(null);
       } catch (err) {
-        console.error('Error fetching consultants:', err);
+        console.error('Error fetching alumni:', err);
         setError('Failed to load alumni information. Please try again later.');
       } finally {
         setLoading(false);
       }
     };
 
-    fetchConsultants();
+    fetchAlumni();
   }, []);
 
   const sortedProfs = React.useMemo(
@@ -48,11 +48,14 @@ export default function Section5() {
 
   const filteredProfs = React.useMemo(
     () =>
-      sortedProfs.filter((prof) => {
+      sortedProfs.filter((alumni) => {
         const lowerCaseSearch = searchTerm.toLowerCase();
         return (
-          prof.name.toLowerCase().includes(lowerCaseSearch) ||
-          prof.chamber.toLowerCase().includes(lowerCaseSearch)
+          alumni.name.toLowerCase().includes(lowerCaseSearch) ||
+          (alumni.company &&
+            alumni.company.toLowerCase().includes(lowerCaseSearch)) ||
+          (alumni.job_title &&
+            alumni.job_title.toLowerCase().includes(lowerCaseSearch))
         );
       }),
     [sortedProfs, searchTerm]
@@ -143,7 +146,8 @@ export default function Section5() {
           transition={{ duration: 0.5 }}
         >
           <p className={styles.introText}>
-            Find the chamber locations for the alumni members below.
+            Connect with our distinguished BITS alumni working at top companies
+            worldwide.
           </p>
 
           <div className={styles.searchContainer}>
@@ -153,7 +157,7 @@ export default function Section5() {
               value={searchTerm}
               onChange={handleSearchChange}
               className={styles.searchInput}
-              aria-label='Search alumni members by name or chamber'
+              aria-label='Search alumni by name, company, or job title'
             />
           </div>
 
@@ -167,8 +171,8 @@ export default function Section5() {
                 animate='visible'
                 exit={{ opacity: 0 }}
               >
-                {filteredProfs.map((prof) => {
-                  const userName = prof.name;
+                {filteredProfs.map((alumni) => {
+                  const userName = alumni.name;
                   return (
                     <motion.div
                       key={userName}
@@ -191,11 +195,19 @@ export default function Section5() {
                           {userName}
                         </h3>
                         <p className={styles.profChamber}>
-                          <span className={styles.chamberLabel}>Chamber:</span>
+                          <span className={styles.chamberLabel}>Company:</span>
                           <span className={styles.chamberValue}>
-                            {' ' + prof.chamber}
+                            {' ' + (alumni.company || 'Not specified')}
                           </span>
                         </p>
+                        {alumni.job_title && (
+                          <p className={styles.profChamber}>
+                            <span className={styles.chamberLabel}>Role:</span>
+                            <span className={styles.chamberValue}>
+                              {' ' + alumni.job_title}
+                            </span>
+                          </p>
+                        )}
                       </div>
                     </motion.div>
                   );
@@ -210,7 +222,7 @@ export default function Section5() {
                 animate='visible'
                 exit='exit'
               >
-                No alumni members match your search.
+                No alumni match your search.
               </motion.p>
             )}
           </AnimatePresence>

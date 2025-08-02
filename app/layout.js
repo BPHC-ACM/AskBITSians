@@ -66,11 +66,7 @@ export default function RootLayout({ children }) {
           rel='stylesheet'
         />
         <title>AskBITSians | Connect with Alumni & Mentors</title>
-        <link
-          rel='icon'
-          type='image/x-icon'
-          href='/askbitsians-small-icon.ico'
-        />
+        <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
         <link rel='icon' type='image/png' href='/askbitsians-icon.png' />
         <meta

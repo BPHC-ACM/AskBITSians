@@ -126,16 +126,10 @@ export default function Section1({ setActiveSection }) {
         width: viewport.isMobile ? '70px' : '90px',
         height: viewport.isMobile ? '70px' : '90px',
         marginBottom: '1rem',
-        backgroundColor: colors.textDark,
-        // IMPORTANT: Replace with your new 'AskBITSians' logo
-        maskImage: 'url(/askbitsians-logo.png)',
-        maskSize: 'contain',
-        maskRepeat: 'no-repeat',
-        maskPosition: 'center',
-        WebkitMaskImage: 'url(/askbitsians-logo.png)',
-        WebkitMaskSize: 'contain',
-        WebkitMaskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'center',
+        backgroundImage: 'url(/askbitsians-logo.png)',
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       },
       h1: {
         ...fontStyles.heading,
@@ -468,9 +462,10 @@ export default function Section1({ setActiveSection }) {
                 style={{
                   position: 'relative',
                   height: '500px',
-                  background: `url('https://images.unsplash.com/photo-1556761175-b413da4b248q?q=80&w=1974&auto=format&fit=crop')`, // Placeholder - replace with relevant image
+                  backgroundImage: `url('/alumni.png')`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
                   borderRadius: '16px',
                   boxShadow: `0 25px 50px -12px rgba(0, 0, 0, 0.25)`,
                 }}

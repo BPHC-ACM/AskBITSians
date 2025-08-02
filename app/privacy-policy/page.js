@@ -133,7 +133,7 @@ export default function PrivacyPolicy() {
           us:
         </p>
         <ul style={styles.ul}>
-          <li style={styles.li}>By email: academiccounsellingcell@gmail.com</li>
+          <li style={styles.li}>By email: askbitsians@gmail.com</li>
         </ul>
       </main>
 
@@ -153,7 +153,7 @@ export default function PrivacyPolicy() {
               color: 'white',
             }}
           >
-            Academic Counselling Cell
+            AskBITSians
           </h3>
           <div
             style={{
@@ -163,8 +163,8 @@ export default function PrivacyPolicy() {
               fontSize: '0.8rem',
             }}
           >
-            © {new Date().getFullYear()} Academic Counselling Cell (ACC), BITS
-            Pilani Hyderabad Campus. All Rights Reserved.
+            © {new Date().getFullYear()} AskBITSians, BITS Pilani Hyderabad
+            Campus. All Rights Reserved.
             <div style={{ marginTop: '1rem' }}>
               <Link
                 href='/'

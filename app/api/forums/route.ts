@@ -68,7 +68,7 @@ export async function POST(req: Request) {
 // Post a new reply
 export async function PATCH(req: Request) {
   try {
-    const { query_id, answer, name, identifier } = await req.json();
+    const { post_id, answer, name, identifier } = await req.json(); // Changed from query_id to post_id
 
     if (!answer.trim()) {
       return NextResponse.json(
@@ -78,7 +78,7 @@ export async function PATCH(req: Request) {
     }
 
     const newReply = {
-      post_id: query_id,
+      post_id: post_id, // Updated field name
       name,
       identifier,
       answer,
