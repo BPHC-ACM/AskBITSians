@@ -121,8 +121,7 @@ export default function PrivacyPolicy() {
           <li style={styles.li}>
             <strong>Company</strong> (referred to as either "the Company", "We",
             "Us" or "Our" in this Agreement) refers to AskBITSians, a platform
-            connecting BITS Pilani students with alumni for mentorship and
-            career guidance.
+            connecting BITS Pilani students with alumni for career guidance.
           </li>
         </ul>
 

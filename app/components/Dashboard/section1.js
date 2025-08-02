@@ -14,13 +14,13 @@ import {
 
 const servicesData = [
   {
-    heading: '1:1 Alumni Mentorship',
+    heading: '1:1 Alumni Guidance',
     short_description:
       'Connect directly with successful BITS alumni for personalized career guidance.',
     long_description: [
       'Private Conversations: Engage in one-on-one chats with alumni working at top companies and organizations worldwide.',
       'Career Guidance: Get tailored advice on career transitions, job search strategies, interview preparation, and industry insights.',
-      'Professional Networking: Build meaningful relationships with mentors who can guide your professional journey.',
+      'Professional Networking: Build meaningful relationships with alumni who can guide your professional journey.',
       'Industry Expertise: Access insights from alumni across diverse fields including tech, finance, consulting, research, and entrepreneurship.',
     ],
     icon: 'chat',
@@ -44,7 +44,7 @@ const servicesData = [
       'Career Playbooks: Comprehensive guides on different career paths, prepared by successful alumni.',
       'Interview Experiences: Real interview experiences and preparation tips from alumni at top companies.',
       'Industry Reports: Insights and trends shared by alumni working in various industries.',
-      'Mentorship Resources: Tools and frameworks to make the most of your mentorship journey.',
+      'Career Resources: Tools and frameworks to make the most of your journey.',
     ],
     icon: 'resources',
   },
@@ -433,7 +433,8 @@ export default function Section1({ setActiveSection }) {
               >
                 Get personalized guidance from successful BITS Pilani alumni
                 working at top companies worldwide. Access career insights,
-                mentorship, and networking opportunities through our exclusive
+                alumni resources, career guidance, professional development,
+                networking, and networking opportunities through our exclusive
                 platform.
               </motion.p>
               <motion.div
@@ -622,7 +623,7 @@ export default function Section1({ setActiveSection }) {
                 </h3>
               </div>
               <p style={{ color: colors.textMuted, fontSize: '1rem' }}>
-                To create the most powerful and accessible alumni mentorship
+                To create the most powerful and accessible alumni guidance
                 network where every BITS student can connect with successful
                 professionals and achieve their career aspirations.
               </p>
@@ -670,7 +671,7 @@ export default function Section1({ setActiveSection }) {
               </div>
               <p style={{ color: colors.textMuted, fontSize: '1rem' }}>
                 To empower BITS students by providing direct access to our
-                global alumni network, enabling meaningful mentorship
+                global alumni network, enabling meaningful guidance
                 relationships that accelerate career growth and professional
                 success.
               </p>

@@ -108,7 +108,7 @@ export default function Sidebar({
       sectionId: 'community',
     },
     {
-      name: user?.role === 'alumnus' ? 'Mentoring Requests' : 'Resources',
+      name: user?.role === 'alumnus' ? 'Student Requests' : 'Resources',
       icon:
         user?.role === 'alumnus' ? (
           <IconBubbleText size={24} className={styles.navIcon} />

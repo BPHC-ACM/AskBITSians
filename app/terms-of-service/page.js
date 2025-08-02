@@ -101,9 +101,9 @@ export default function TermsOfService() {
           </p>
           <p style={styles.p}>
             Our Service provides a platform connecting BITS Pilani students with
-            successful alumni for mentorship, career guidance, and professional
-            networking. These Terms apply to all visitors, users, and others who
-            access or use the Service.
+            successful alumni for career guidance, and professional networking.
+            These Terms apply to all visitors, users, and others who access or
+            use the Service.
           </p>
         </section>
 

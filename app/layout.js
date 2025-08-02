@@ -8,24 +8,24 @@ export const metadata = {
   },
 
   description:
-    'Connect with well-placed BITS Pilani alumni and experienced mentors for career guidance, academic support, and professional mentorship. Join our vibrant community platform for 1:1 chats and forums.',
+    'Connect with well-placed BITS Pilani alumni for career guidance, academic support, and professional networking. Join our vibrant community platform for 1:1 chats and forums.',
 
   keywords: [
     'BITS Pilani',
     'Alumni Network',
-    'Mentorship Platform',
+    'Career Platform',
     'Career Guidance',
     'BITSians',
     'Community Forum',
     'Professional Networking',
     'Academic Support',
-    'Alumni Mentors',
+    'Alumni Network',
   ],
 
   openGraph: {
     title: 'AskBITSians | Connect with BITS Alumni ',
     description:
-      'Connect with successful BITS alumni and experienced mentors for career guidance and professional growth.',
+      'Connect with successful BITS alumni for career guidance and professional growth.',
     url: 'https://askbitsians.acmbphc.in',
     siteName: 'AskBITSians',
     images: [
@@ -43,7 +43,7 @@ export const metadata = {
     card: 'summary',
     title: 'AskBITSians | Connect with BITS Alumni ',
     description:
-      'Connect with successful BITS alumni and experienced mentors for career guidance and professional growth.',
+      'Connect with successful BITS alumni for career guidance and professional growth.',
     images: ['https://askbitsians.acmbphc.in/askbitsians-og.png'],
   },
 
@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
         />
         <meta
           name='keywords'
-          content='AskBITSians, BITS Alumni, Mentorship Platform, Career Guidance'
+          content='AskBITSians, BITS Alumni, Career Platform, Career Guidance'
         />
         <meta name='author' content='ACM BPHC' />
       </head>

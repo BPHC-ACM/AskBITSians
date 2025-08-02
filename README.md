@@ -1,6 +1,6 @@
 # AskBITSians - Connect with Alumni 🎓
 
-A vibrant platform connecting BITS Pilani students with successful alumni and experienced mentors for career guidance, academic support, and professional networking.
+A vibrant platform connecting BITS Pilani students with successful alumni for career guidance, academic support, and professional networking.
 
 ## Features
 
@@ -16,7 +16,7 @@ A vibrant platform connecting BITS Pilani students with successful alumni and ex
 
 ### For Alumni
 
-- Mentor fellow BITSians by sharing your experience
+- Share your experience with fellow BITSians
 - Engage in one-on-one chats with students
 - Participate in community discussions and help the next generation
 

@@ -225,8 +225,8 @@ export default function UpdateAlumniProfileModal({
         </button>
         <h2>Update Your Alumni Profile</h2>
         <p className={styles.instructions}>
-          Complete your profile to help students connect with you for mentorship
-          and guidance.
+          Complete your profile to help students connect with you for guidance
+          and support.
         </p>
 
         {userLoading && <p>Loading current data...</p>}
