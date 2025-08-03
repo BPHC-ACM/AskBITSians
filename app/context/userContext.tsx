@@ -8,7 +8,7 @@ import {
   useCallback,
 } from 'react';
 import { supabase } from '@/utils/supabaseClient';
-import { toast } from 'sonner';
+import { authError } from '../components/common/notification-service';
 
 interface User {
   email: string;
@@ -110,21 +110,19 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         ) {
           determinedRole = 'student';
         } else {
-          toast.error(`Unauthorized email domain: ${email}`, {
-            description:
-              'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai',
-            duration: 6000,
-          });
+          authError(
+            `Unauthorized email domain: ${email}`,
+            'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai'
+          );
           await supabase.auth.signOut();
           setLoading(false);
           return;
         }
       } else {
-        toast.error(`Invalid email format: ${email}`, {
-          description:
-            'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai',
-          duration: 6000,
-        });
+        authError(
+          `Invalid email format: ${email}`,
+          'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai'
+        );
         await supabase.auth.signOut();
         setLoading(false);
         return;

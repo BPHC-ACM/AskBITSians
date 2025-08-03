@@ -6,6 +6,11 @@ import { motion } from 'framer-motion';
 import styles from './chat-requests.module.css';
 import ScrollToTop from '../ScrollToTop/scroll-to-top';
 import { Pagination } from '@mui/material';
+import {
+  requestAccepted,
+  requestDeclined,
+  error as showError,
+} from '../common/notification-service';
 
 const ChatRequestSkeleton = () => (
   <motion.div
@@ -207,29 +212,7 @@ const ChatRequestModal = ({ request, onClose, onStatusChange }) => {
   );
 };
 
-const NotificationPopup = ({ message, type, onClose }) => {
-  useEffect(() => {
-    const timer = setTimeout(onClose, 3000);
-    return () => clearTimeout(timer);
-  }, [onClose]);
-
-  return (
-    <motion.div
-      className={`${styles.notificationPopup} ${
-        type === 'success'
-          ? styles.notificationSuccess
-          : styles.notificationError
-      }`}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 10 }}
-    >
-      {message}
-    </motion.div>
-  );
-};
 export default function ChatRequests({ userId }) {
-  const [notification, setNotification] = useState(null);
   const itemsPerPage = 3;
   const [page, setPage] = useState(1);
   const [requests, setRequests] = useState([]);
@@ -254,6 +237,7 @@ export default function ChatRequests({ userId }) {
       setShowPastRequests(true);
     } catch (error) {
       console.error('Error fetching past requests:', error);
+      showError('Failed to load past requests. Please try again.');
     }
   };
 
@@ -266,6 +250,7 @@ export default function ChatRequests({ userId }) {
         setTotalRequests(data.totalRequests);
       } catch (error) {
         console.error('Error fetching chat requests:', error);
+        showError('Failed to load chat requests. Please refresh the page.');
       } finally {
         setLoading(false);
       }
@@ -279,16 +264,12 @@ export default function ChatRequests({ userId }) {
       prevRequests.filter((request) => request.id !== id)
     );
 
-    setNotification({
-      message:
-        newStatus === 'accepted'
-          ? 'Chat request accepted!'
-          : 'Chat request declined.',
-      type: newStatus === 'accepted' ? 'success' : 'error',
-    });
-
-    const timer = setTimeout(() => setNotification(null), 3000);
-    return () => clearTimeout(timer);
+    // Show notification using unified service
+    if (newStatus === 'accepted') {
+      requestAccepted('Alumni');
+    } else {
+      requestDeclined('Alumni');
+    }
   };
 
   return (
@@ -302,14 +283,6 @@ export default function ChatRequests({ userId }) {
           Past Requests
         </button>
       </div>
-
-      {notification && (
-        <NotificationPopup
-          message={notification.message}
-          type={notification.type}
-          onClose={() => setNotification(null)}
-        />
-      )}
 
       <div className={styles.requestsContainer}>
         {loading ? (

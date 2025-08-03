@@ -5,6 +5,10 @@ import * as Tabs from '@radix-ui/react-tabs';
 import * as Select from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import styles from './request-button.module.css';
+import {
+  requestSent,
+  error as showError,
+} from '../common/notification-service';
 
 export default function RequestButton({ studentId }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,6 +42,7 @@ export default function RequestButton({ studentId }) {
       });
     } catch (error) {
       console.error('Error fetching categories:', error);
+      showError('Failed to load category options. Please refresh the page.');
     }
   }
 
@@ -142,6 +147,9 @@ export default function RequestButton({ studentId }) {
         throw new Error(`Failed to create ${errors.length} requests`);
       }
 
+      const successfulRequests = requests.length - errors.length;
+      requestSent(successfulRequests);
+
       setFormData({
         subject: '',
         details: '',
@@ -150,6 +158,7 @@ export default function RequestButton({ studentId }) {
       setIsOpen(false);
     } catch (error) {
       console.error('Error creating requests:', error);
+      showError('Failed to send request. Please try again.');
     } finally {
       setIsLoading(false);
     }

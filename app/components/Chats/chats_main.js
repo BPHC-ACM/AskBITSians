@@ -1,7 +1,7 @@
 'use client';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IconSend } from '@tabler/icons-react';
-import { toast } from 'sonner';
+import { error as showError } from '../common/notification-service';
 import styles from './chats_main.css';
 import { useState, useEffect, useRef } from 'react';
 
@@ -258,10 +258,9 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
         setMessages((prevMessages) =>
           prevMessages.filter((msg) => msg.tempId !== tempId)
         );
-        toast.error('Failed to send message', {
-          description: 'Please check your connection and try again.',
-          duration: 3000,
-        });
+        showError(
+          'Failed to send message. Please check your connection and try again.'
+        );
       });
   };
 

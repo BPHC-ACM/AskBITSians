@@ -4,6 +4,10 @@ import { motion } from 'framer-motion';
 import styles from './update-profile-modal.module.css';
 import { IconX, IconPlus } from '@tabler/icons-react';
 import { useUser } from '@/context/userContext';
+import {
+  profileUpdated,
+  error as showError,
+} from '../common/notification-service';
 
 const DOMAIN_OPTIONS = [
   'Technology',
@@ -55,8 +59,6 @@ export default function UpdateAlumniProfileModal({
   const [newExpertise, setNewExpertise] = useState('');
   const [showCustomExpertise, setShowCustomExpertise] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -67,8 +69,6 @@ export default function UpdateAlumniProfileModal({
         linkedin_profile_url: '',
         areas_of_expertise: [],
       });
-      setError(null);
-      setSuccess(null);
       setIsLoading(false);
       setNewExpertise('');
       setShowCustomExpertise(false);
@@ -135,22 +135,20 @@ export default function UpdateAlumniProfileModal({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess(null);
 
     if (!formData.company || !formData.job_title) {
-      setError('Company and Job Title are required.');
+      showError('Company and Job Title are required.');
       return;
     }
 
     if (!alumniId) {
-      setError('Alumni ID not found. Cannot update profile.');
+      showError('Alumni ID not found. Cannot update profile.');
       console.error('Update Error: alumniId is missing.');
       return;
     }
 
     if (formData.graduation_year && !/^\d{4}$/.test(formData.graduation_year)) {
-      setError('Please enter a valid 4-digit graduation year.');
+      showError('Please enter a valid 4-digit graduation year.');
       return;
     }
 
@@ -158,7 +156,7 @@ export default function UpdateAlumniProfileModal({
       formData.linkedin_profile_url &&
       !formData.linkedin_profile_url.includes('linkedin.com')
     ) {
-      setError('Please enter a valid LinkedIn URL.');
+      showError('Please enter a valid LinkedIn URL.');
       return;
     }
 
@@ -194,7 +192,7 @@ export default function UpdateAlumniProfileModal({
         throw new Error(result.error || 'Failed to update profile.');
       }
 
-      setSuccess('Profile updated successfully!');
+      profileUpdated('Alumni profile');
       if (onUpdateSuccess) {
         onUpdateSuccess(updateData);
       }
@@ -210,7 +208,7 @@ export default function UpdateAlumniProfileModal({
         onClose();
       }, 1500);
     } catch (err) {
-      setError(err.message || 'An unexpected error occurred.');
+      showError(err.message || 'An unexpected error occurred.');
       console.error('Update error:', err);
     } finally {
       setIsLoading(false);
@@ -451,9 +449,6 @@ export default function UpdateAlumniProfileModal({
               )}
             </div>
           </fieldset>
-
-          {error && <p className={styles.errorMessage}>{error}</p>}
-          {success && <p className={styles.successMessage}>{success}</p>}
 
           <button
             type='submit'
