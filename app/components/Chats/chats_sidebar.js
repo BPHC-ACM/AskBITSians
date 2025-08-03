@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './chats_sidebar.css';
 import RequestButton from '../RequestButton/RequestButton';
+import { requestSent } from '../common/notification-service';
 
 export default function ChatsSidebar({
   userRole,
@@ -16,32 +17,40 @@ export default function ChatsSidebar({
   const [isMobileView, setIsMobileView] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
+  // Handle request success notification
+  const handleRequestSuccess = (count) => {
+    requestSent(count);
+    // Optionally refresh chat rooms to show any new conversations
+    fetchChatRooms();
+  };
+
+  // Fetch chat rooms function
+  const fetchChatRooms = async () => {
+    if (!userId) return;
+
+    try {
+      const response = await fetch(`/api/chats/user/${userId}`);
+      const data = await response.json();
+      if (data.rooms) {
+        setRooms(data.rooms);
+      } else {
+        console.error('No rooms data found');
+        setRooms([]);
+      }
+    } catch (error) {
+      console.error('Error fetching chat rooms:', error);
+      setRooms([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Handle client-side hydration
   useEffect(() => {
     setIsClient(true);
   }, []);
 
   useEffect(() => {
-    if (!userId) return;
-
-    const fetchChatRooms = async () => {
-      try {
-        const response = await fetch(`/api/chats/user/${userId}`);
-        const data = await response.json();
-        if (data.rooms) {
-          setRooms(data.rooms);
-        } else {
-          console.error('No rooms data found');
-          setRooms([]);
-        }
-      } catch (error) {
-        console.error('Error fetching chat rooms:', error);
-        setRooms([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchChatRooms();
   }, [userId]);
 
@@ -80,7 +89,12 @@ export default function ChatsSidebar({
     <div className={`sidebar ${selectedRoom && isMobileView ? 'hidden' : ''}`}>
       <h2 className='chats-heading'>
         Chats
-        {userRole === 'student' ? <RequestButton studentId={userId} /> : null}
+        {userRole === 'student' ? (
+          <RequestButton
+            studentId={userId}
+            onRequestSuccess={handleRequestSuccess}
+          />
+        ) : null}
       </h2>
 
       <input

@@ -5,12 +5,9 @@ import * as Tabs from '@radix-ui/react-tabs';
 import * as Select from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import styles from './request-button.module.css';
-import {
-  requestSent,
-  error as showError,
-} from '../common/notification-service';
+import { error as showError } from '../common/notification-service';
 
-export default function RequestButton({ studentId }) {
+export default function RequestButton({ studentId, onRequestSuccess }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [departments, setDepartments] = useState({
@@ -147,8 +144,8 @@ export default function RequestButton({ studentId }) {
       if (errors.length > 0) {
         console.error('Failed requests details:', errors);
         // Show notification for successful requests if any, then show error
-        if (successfulRequests > 0) {
-          requestSent(successfulRequests);
+        if (successfulRequests > 0 && onRequestSuccess) {
+          onRequestSuccess(successfulRequests);
         }
         throw new Error(
           `Failed to create ${errors.length} out of ${requests.length} requests`
@@ -156,19 +153,17 @@ export default function RequestButton({ studentId }) {
       }
 
       // All requests were successful
-      console.log(
-        'Showing success notification for',
-        successfulRequests,
-        'requests'
-      );
-      requestSent(successfulRequests);
-
       setFormData({
         subject: '',
         details: '',
         department: '',
       });
       setIsOpen(false);
+
+      // Notify parent component of successful request creation
+      if (onRequestSuccess) {
+        onRequestSuccess(successfulRequests);
+      }
     } catch (error) {
       console.error('Error creating requests:', error);
       showError('Failed to send request. Please try again.');

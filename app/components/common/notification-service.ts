@@ -54,7 +54,6 @@ export const NotificationService = {
   },
 
   requestSent: (count: number = 1) => {
-    console.log('requestSent called with count:', count);
     return toast.success(
       count === 1
         ? 'Request sent successfully!'

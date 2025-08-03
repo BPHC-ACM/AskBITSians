@@ -233,16 +233,19 @@ export async function PATCH(req) {
       const emailHtml =
         status === 'accepted'
           ? `
-          <h2>Query Accepted</h2>
-          <p>${alumnusName} has <strong>accepted</strong> your query about "${subject}".</p>
-          <p>You can now chat with them through the messaging system on AskBITSians.</p>
-          <p>Log in to start your conversation and get the guidance you need!</p>
-          `
+      <p><strong>${alumnusName}</strong> has <strong>accepted</strong> your query on "<em>${subject}</em>".</p>
+      <p>You can now start a conversation with them via the AskBITSians messaging system.</p>
+      <p><a href="https://askbitsians.netlify.app">Log in</a> to continue the discussion and get guidance.</p>
+      <br />
+      <p style="font-size: 0.9em; color: #666;">— The AskBITSians Team | ACM BPHC</p>
+      `
           : `
-          <h2>Query Declined</h2>
-          <p>${alumnusName} has <strong>declined</strong> your query about "${subject}".</p>
-          <p>Don't worry! You can try reaching out to other alumni or post your question in the community forum.</p>
-          `;
+      <p><strong>${alumnusName}</strong> has <strong>declined</strong> your query on "<em>${subject}</em>".</p>
+      <p>You can reach out to other alumni or post your question in the community forum for more help.</p>
+      <p><a href="https://askbitsians.netlify.app">Log in</a> to explore more options.</p>
+      <br />
+      <p style="font-size: 0.9em; color: #666;">— The AskBITSians Team | ACM BPHC</p>
+      `;
 
       await sendEmail(studentEmail, emailSubject, emailHtml);
     }

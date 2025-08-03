@@ -8,12 +8,11 @@ export function Providers({ children }) {
     <UserProvider>
       {children}
       <Toaster
-        position='top-center'
+        position='top-right'
         richColors
         closeButton
         expand={true}
-        duration={6000}
-        visibleToasts={5}
+        duration={4000}
       />
     </UserProvider>
   );
