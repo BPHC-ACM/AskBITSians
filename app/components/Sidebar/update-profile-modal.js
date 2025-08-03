@@ -33,14 +33,28 @@ export default function UpdateProfileModal({
       setBatch('');
       setIsLoading(false);
 
-      if (!userLoading && user) {
-        setBranch(user.branch ?? '');
-
-        setCgpa(user.cgpa?.toString() ?? '');
-        setBatch(user.batch?.toString() ?? '');
+      // Load existing data if available
+      if (!userLoading && user && user.role === 'student') {
+        fetchStudentData();
       }
     }
   }, [isOpen, user, userLoading]);
+
+  const fetchStudentData = async () => {
+    if (!studentId) return;
+
+    try {
+      const response = await fetch(`/api/students?id=${studentId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setBranch(data.branch || '');
+        setCgpa(data.cgpa?.toString() || '');
+        setBatch(data.batch?.toString() || '');
+      }
+    } catch (error) {
+      console.error('Error fetching student data:', error);
+    }
+  };
 
   if (!isOpen) return null;
 
