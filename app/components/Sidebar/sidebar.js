@@ -271,6 +271,21 @@ export default function Sidebar({
                     </motion.span>
                   </button>
                 )}
+                {user?.role === 'alumnus' && (
+                  <button
+                    className={styles.actionButton}
+                    onClick={handleOpenUpdateModal}
+                  >
+                    <IconUserEdit size={18} />
+                    <motion.span
+                      variants={textVariants}
+                      animate={'expanded'}
+                      initial={false}
+                    >
+                      Update Profile
+                    </motion.span>
+                  </button>
+                )}
                 <button className={styles.actionButton} onClick={handleLogout}>
                   <IconLogout size={18} />
                   <motion.span

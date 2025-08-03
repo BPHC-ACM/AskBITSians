@@ -44,15 +44,47 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const developerEmail = process.env.NEXT_PUBLIC_DEVELOPER_EMAIL;
 
     if (developerEmail === email) {
-      setUser({
-        email: developerEmail,
-        name: 'Developer',
-        role: 'alumnus',
-        id: '7a61c68e-0e82-4b57-bbc6-e28b79561d1f',
-        identifier: 'DEV',
-      });
-      setLoading(false);
-      return;
+      try {
+        // Sync developer user as alumni
+        const response = await fetch('/api/user-sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: developerEmail,
+            name: 'Developer',
+            role: 'alumnus',
+          }),
+        });
+
+        const alumnusData = await response.json();
+        if (!response.ok) {
+          throw new Error(
+            alumnusData.error || 'Failed to sync developer as alumni'
+          );
+        }
+
+        setUser({
+          email: developerEmail,
+          name: 'Developer',
+          role: 'alumnus',
+          id: alumnusData.id,
+          identifier: alumnusData.company || alumnusData.job_title || 'DEV',
+        });
+        setLoading(false);
+        return;
+      } catch (e: any) {
+        console.error('Error during developer sync:', e.message);
+        // Fallback to hardcoded values if sync fails
+        setUser({
+          email: developerEmail,
+          name: 'Developer',
+          role: 'alumnus',
+          id: '7a61c68e-0e82-4b57-bbc6-e28b79561d1f',
+          identifier: 'DEV',
+        });
+        setLoading(false);
+        return;
+      }
     }
 
     // Determine role based on email domain
