@@ -9,6 +9,7 @@ import { Pagination } from '@mui/material';
 import {
   requestAccepted,
   requestDeclined,
+  requestProcessed,
   error as showError,
 } from '../common/notification-service';
 
@@ -265,11 +266,7 @@ export default function ChatRequests({ userId }) {
     );
 
     // Show notification using unified service
-    if (newStatus === 'accepted') {
-      requestAccepted('Alumni');
-    } else {
-      requestDeclined('Alumni');
-    }
+    requestProcessed(newStatus);
   };
 
   return (

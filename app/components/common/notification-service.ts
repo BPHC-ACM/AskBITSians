@@ -54,6 +54,7 @@ export const NotificationService = {
   },
 
   requestSent: (count: number = 1) => {
+    console.log('requestSent called with count:', count);
     return toast.success(
       count === 1
         ? 'Request sent successfully!'
@@ -77,6 +78,20 @@ export const NotificationService = {
       description: `${alumniName} declined your request. Try reaching out to other alumni.`,
       duration: 5000,
     });
+  },
+
+  // For alumni when they accept/decline requests
+  requestProcessed: (action: 'accepted' | 'declined') => {
+    const isAccepted = action === 'accepted';
+    return toast[isAccepted ? 'success' : 'error'](
+      `Request ${action} successfully!`,
+      {
+        description: isAccepted
+          ? 'The student will be notified and can now start chatting with you.'
+          : 'The student will be notified.',
+        duration: 4000,
+      }
+    );
   },
 
   custom: (
@@ -112,6 +127,7 @@ export const {
   requestSent,
   requestAccepted,
   requestDeclined,
+  requestProcessed,
   custom,
 } = NotificationService;
 

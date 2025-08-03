@@ -141,13 +141,26 @@ export default function RequestButton({ studentId }) {
         })
       );
 
-      const errors = requests.filter((r) => !r.response?.ok);
+      const errors = requests.filter((r) => r.error || !r.response?.ok);
+      const successfulRequests = requests.length - errors.length;
+
       if (errors.length > 0) {
         console.error('Failed requests details:', errors);
-        throw new Error(`Failed to create ${errors.length} requests`);
+        // Show notification for successful requests if any, then show error
+        if (successfulRequests > 0) {
+          requestSent(successfulRequests);
+        }
+        throw new Error(
+          `Failed to create ${errors.length} out of ${requests.length} requests`
+        );
       }
 
-      const successfulRequests = requests.length - errors.length;
+      // All requests were successful
+      console.log(
+        'Showing success notification for',
+        successfulRequests,
+        'requests'
+      );
       requestSent(successfulRequests);
 
       setFormData({
