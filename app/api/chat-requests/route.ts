@@ -136,11 +136,10 @@ export async function POST(req) {
         alumnusEmail,
         'New Student Query - AskBITSians',
         `
-        <h2>New Student Query</h2>
         <p>${studentName} has reached out to you through AskBITSians.</p>
-        <h3>Subject: ${subject}</h3>
+        <p><strong>Subject:</strong> ${subject}</p>
         <p><strong>Details:</strong> ${details}</p>
-        <p>Please log in to AskBITSians to accept or decline this request and help a fellow BITSian!</p>
+        <p>Please <a href="https://askbitsians.acmbphc.in">Log in</a> to AskBITSians to accept or decline this request and help a fellow BITSian!</p>
         `
       );
     }
@@ -235,14 +234,14 @@ export async function PATCH(req) {
           ? `
       <p><strong>${alumnusName}</strong> has <strong>accepted</strong> your query on "<em>${subject}</em>".</p>
       <p>You can now start a conversation with them via the AskBITSians messaging system.</p>
-      <p><a href="https://askbitsians.netlify.app">Log in</a> to continue the discussion and get guidance.</p>
+      <p><a href="https://askbitsians.acmbphc.in">Log in</a> to continue the discussion and get guidance.</p>
       <br />
       <p style="font-size: 0.9em; color: #666;">— The AskBITSians Team | ACM BPHC</p>
       `
           : `
       <p><strong>${alumnusName}</strong> has <strong>declined</strong> your query on "<em>${subject}</em>".</p>
       <p>You can reach out to other alumni or post your question in the community forum for more help.</p>
-      <p><a href="https://askbitsians.netlify.app">Log in</a> to explore more options.</p>
+      <p><a href="https://askbitsians.acmbphc.in">Log in</a> to explore more options.</p>
       <br />
       <p style="font-size: 0.9em; color: #666;">— The AskBITSians Team | ACM BPHC</p>
       `;
