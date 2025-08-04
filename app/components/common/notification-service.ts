@@ -93,6 +93,18 @@ export const NotificationService = {
     );
   },
 
+  profileIncomplete: (onUpdateProfile: () => void) => {
+    return toast.info('Complete your profile', {
+      description:
+        'Use the update profile button to fill in your career details to help bitsians find you.',
+      duration: 10000,
+      action: {
+        label: 'Update Profile',
+        onClick: onUpdateProfile,
+      },
+    });
+  },
+
   custom: (
     message: string,
     type: string = 'default',
@@ -127,6 +139,7 @@ export const {
   requestAccepted,
   requestDeclined,
   requestProcessed,
+  profileIncomplete,
   custom,
 } = NotificationService;
 

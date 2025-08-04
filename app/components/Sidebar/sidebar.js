@@ -1,5 +1,10 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { useUser } from '@/context/userContext';
 import { motion, AnimatePresence } from 'framer-motion';
 import UpdateProfileModal from './update-profile-modal';
@@ -21,13 +26,16 @@ import {
   IconUserEdit,
 } from '@tabler/icons-react';
 
-export default function Sidebar({
-  setActiveSection,
-  activeSection,
-  isExpanded,
-  toggleSidebar,
-  loading: parentLoading,
-}) {
+const Sidebar = forwardRef(function Sidebar(
+  {
+    setActiveSection,
+    activeSection,
+    isExpanded,
+    toggleSidebar,
+    loading: parentLoading,
+  },
+  ref
+) {
   const { user, loading: userLoading, refetchUser } = useUser();
   const [showUserActions, setShowUserActions] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -84,6 +92,11 @@ export default function Sidebar({
       refetchUser();
     }
   };
+
+  // Expose methods to parent component through ref
+  useImperativeHandle(ref, () => ({
+    openUpdateModal: handleOpenUpdateModal,
+  }));
 
   const handleToggle = (forceState) => {
     if (typeof toggleSidebar === 'function') {
@@ -421,4 +434,6 @@ export default function Sidebar({
       )}
     </>
   );
-}
+});
+
+export default Sidebar;

@@ -47,7 +47,11 @@ export async function POST(req: Request) {
         .maybeSingle();
 
       if (alumnusExists) {
-        return NextResponse.json({ ...alumnusExists, role: 'alumnus' });
+        return NextResponse.json({
+          ...alumnusExists,
+          role: 'alumnus',
+          isNewUser: false,
+        });
       }
 
       // Create new alumnus
@@ -59,7 +63,11 @@ export async function POST(req: Request) {
 
       if (insertError) throw insertError;
 
-      return NextResponse.json({ ...newAlumnus, role: 'alumnus' });
+      return NextResponse.json({
+        ...newAlumnus,
+        role: 'alumnus',
+        isNewUser: true,
+      });
     } else {
       return NextResponse.json(
         { error: 'Invalid role. Must be either "student" or "alumnus"' },

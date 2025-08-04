@@ -21,15 +21,18 @@ interface User {
 const UserContext = createContext<{
   user: User | null;
   loading: boolean;
+  isNewAlumni: boolean;
   refetchUser?: () => void;
 }>({
   user: null,
   loading: true,
+  isNewAlumni: false,
 });
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isNewAlumni, setIsNewAlumni] = useState(false);
 
   const fetchUser = useCallback(async () => {
     // Don't block initial render
@@ -180,6 +183,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
           userId = alumnusData.id;
           identifier = alumnusData.company || alumnusData.job_title || 'Alumni';
+
+          // Set isNewAlumni flag if this is a newly created alumni profile
+          if (alumnusData.isNewUser) {
+            setIsNewAlumni(true);
+          }
         } catch (e: any) {
           console.error('Error during alumni sync:', e.message);
           setUser(null);
@@ -207,7 +215,9 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   }, [fetchUser]);
 
   return (
-    <UserContext.Provider value={{ user, loading, refetchUser: fetchUser }}>
+    <UserContext.Provider
+      value={{ user, loading, isNewAlumni, refetchUser: fetchUser }}
+    >
       {children}
     </UserContext.Provider>
   );
