@@ -35,74 +35,85 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [isNewAlumni, setIsNewAlumni] = useState(false);
 
   const fetchUser = useCallback(async () => {
-    // Don't block initial render
-    if (loading) {
-      setTimeout(() => setLoading(true), 0);
-    }
-
     try {
-      const { data, error } = await supabase.auth.getUser();
-      if (error || !data?.user) {
+      // Use getSession instead of getUser for better performance
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+      if (error || !session?.user) {
         setLoading(false);
         return;
       }
 
-      const email = data.user.email ?? '';
+      const email = session.user.email ?? '';
       const developerEmail = process.env.NEXT_PUBLIC_DEVELOPER_EMAIL;
 
+      // Fast path for developer - set immediately and return
       if (developerEmail === email) {
-        try {
-          // Sync developer user as alumni
-          const response = await fetch('/api/user-sync', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              email: developerEmail,
-              name: 'Developer',
-              role: 'alumnus',
-            }),
-          });
-
-          const alumnusData = await response.json();
-          if (!response.ok) {
-            throw new Error(
-              alumnusData.error || 'Failed to sync developer as alumni'
-            );
-          }
-
-          setUser({
-            email: developerEmail,
-            name: 'Developer',
-            role: 'alumnus',
-            id: alumnusData.id,
-            identifier: alumnusData.company || alumnusData.job_title || 'DEV',
-          });
-          setLoading(false);
-          return;
-        } catch (e: any) {
-          console.error('Error during developer sync:', e.message);
-          // Fallback to hardcoded values if sync fails
-          setUser({
-            email: developerEmail,
-            name: 'Developer',
-            role: 'alumnus',
-            id: '7a61c68e-0e82-4b57-bbc6-e28b79561d1f',
-            identifier: 'DEV',
-          });
-          setLoading(false);
-          return;
-        }
+        setUser({
+          email: developerEmail,
+          name: 'Developer',
+          role: 'alumnus',
+          id: '7a61c68e-0e82-4b57-bbc6-e28b79561d1f',
+          identifier: 'DEV',
+        });
+        setLoading(false);
+        // No background sync needed for developer
+        return;
       }
 
-      // Determine role based on email domain
-      let determinedRole: 'student' | 'alumnus' = 'student';
+      // Quick role determination without complex validation
+      const determinedRole: 'student' | 'alumnus' = email.endsWith(
+        '@alumni.bits-pilani.ac.in'
+      )
+        ? 'alumnus'
+        : 'student';
 
-      if (email.endsWith('@alumni.bits-pilani.ac.in')) {
-        determinedRole = 'alumnus';
-      } else {
-        // Student email formats:
-        // 1. f<batch><id>@<campus>.bits-pilani.ac.in (e.g., f20230064@hyderabad.bits-pilani.ac.in)
-        // 2. Any email ending with @<campus>.bits-pilani.ac.in (e.g., acm.bphc@hyderabad.bits-pilani.ac.in)
+      // Basic email validation - defer complex validation to background
+      if (!email.includes('@') || !email.includes('.bits-pilani.ac.in')) {
+        authError(
+          `Invalid email: ${email}`,
+          'Please use a valid BITS Pilani email address.'
+        );
+        await supabase.auth.signOut();
+        setLoading(false);
+        return;
+      }
+
+      const name = (session.user.user_metadata?.full_name ?? 'Unknown')
+        .toLowerCase()
+        .split(' ')
+        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+
+      // Set user immediately with basic info - this unblocks the UI
+      setUser({
+        email,
+        name,
+        role: determinedRole,
+        id: session.user.id, // Use session ID immediately
+        identifier: determinedRole === 'student' ? '20XXXXH' : 'Alumni',
+      });
+      setLoading(false);
+
+      // Defer detailed validation and sync to background
+      validateAndSyncUser(email, name, determinedRole);
+    } catch (error) {
+      console.error('Error in fetchUser:', error);
+      setLoading(false);
+    }
+  }, []);
+
+  // Background validation and sync function that doesn't block the UI
+  const validateAndSyncUser = async (
+    email: string,
+    name: string,
+    role: 'student' | 'alumnus'
+  ) => {
+    try {
+      // Perform detailed email validation in background
+      if (role === 'student') {
         const validCampuses = ['hyderabad', 'pilani', 'goa', 'dubai'];
         const emailParts = email.split('@');
 
@@ -112,103 +123,55 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
           // Check if it's a valid student email domain
           if (
-            validCampuses.includes(campusDomain) &&
-            domain === `${campusDomain}.bits-pilani.ac.in`
+            !validCampuses.includes(campusDomain) ||
+            domain !== `${campusDomain}.bits-pilani.ac.in`
           ) {
-            determinedRole = 'student';
-          } else {
             authError(
               `Unauthorized email domain: ${email}`,
               'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai'
             );
             await supabase.auth.signOut();
-            setLoading(false);
             return;
           }
-        } else {
-          authError(
-            `Invalid email format: ${email}`,
-            'Please use a valid BITS Pilani email address:\n• Students: <username>@<campus>.bits-pilani.ac.in\n• Alumni: <username>@alumni.bits-pilani.ac.in\n\nValid campuses: hyderabad, pilani, goa, dubai'
-          );
-          await supabase.auth.signOut();
-          setLoading(false);
-          return;
         }
       }
 
-      const name = (data.user.user_metadata?.full_name ?? 'Unknown')
-        .toLowerCase()
-        .split(' ')
-        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-
-      const role = determinedRole;
-      let userId: string | null = null;
-      let identifier: string | null = null;
-
-      if (role === 'student') {
-        try {
-          const response = await fetch('/api/user-sync', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, name, role: 'student' }),
-          });
-
-          const studentData = await response.json();
-          if (!response.ok) {
-            throw new Error(studentData.error || 'Failed to sync student data');
-          }
-
-          userId = studentData.id;
-          identifier = studentData.identifier;
-        } catch (e: any) {
-          console.error('Error during student sync:', e.message);
-          setUser(null);
-          setLoading(false);
-          return;
-        }
-      } else if (role === 'alumnus') {
-        try {
-          // Check if alumnus exists, if not create them
-          const response = await fetch('/api/user-sync', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, name, role: 'alumnus' }),
-          });
-
-          const alumnusData = await response.json();
-          if (!response.ok) {
-            throw new Error(alumnusData.error || 'Failed to sync alumnus data');
-          }
-
-          userId = alumnusData.id;
-          identifier = alumnusData.company || alumnusData.job_title || 'Alumni';
-
-          // Set isNewAlumni flag if this is a newly created alumni profile
-          if (alumnusData.isNewUser) {
-            setIsNewAlumni(true);
-          }
-        } catch (e: any) {
-          console.error('Error during alumni sync:', e.message);
-          setUser(null);
-          setLoading(false);
-          return;
-        }
-      }
-
-      setUser({
-        email,
-        name,
-        role,
-        id: userId ?? null,
-        identifier: identifier ?? undefined,
+      // Sync user data with API
+      const response = await fetch('/api/user-sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, role }),
       });
-      setLoading(false);
+
+      const userData = await response.json();
+      if (response.ok) {
+        // Update user with complete data from API
+        setUser((prevUser) =>
+          prevUser
+            ? {
+                ...prevUser,
+                id: userData.id,
+                identifier:
+                  role === 'student'
+                    ? userData.identifier
+                    : userData.company || userData.job_title || 'Alumni',
+              }
+            : null
+        );
+
+        // Set isNewAlumni flag if this is a newly created alumni profile
+        if (role === 'alumnus' && userData.isNewUser) {
+          setIsNewAlumni(true);
+        }
+      } else {
+        console.error('Background sync failed:', userData.error);
+        // Keep the user logged in with basic info even if sync fails
+      }
     } catch (error) {
-      console.error('Error in fetchUser:', error);
-      setLoading(false);
+      console.error('Background validation/sync error:', error);
+      // Keep the user logged in with basic info even if sync fails
     }
-  }, []);
+  };
 
   useEffect(() => {
     fetchUser();

@@ -9,7 +9,7 @@
   background: linear-gradient(to bottom, #f9f9f9, #eaeaea);
   width: 70%;
   color: black;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 300;
   display: flex;
   flex-direction: column;
@@ -88,7 +88,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 500;
   color: #333;
   font-size: 1.2rem;

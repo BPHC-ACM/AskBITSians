@@ -3,7 +3,7 @@
   color: #222;
   width: 30%;
   padding: 15px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   display: flex;
   flex-direction: column;
   border-right: 2px solid #dbeafe;

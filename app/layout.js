@@ -1,5 +1,14 @@
+import { Poppins } from 'next/font/google';
 import { Providers } from './providers';
 import './globals.css';
+
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  display: 'swap',
+  variable: '--font-poppins',
+  preload: true, // Ensure font is preloaded
+});
 
 export const metadata = {
   title: {
@@ -59,38 +68,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en'>
+    <html lang='en' className={poppins.variable}>
       <head>
         {/* Preconnect to third-party origins for performance */}
-        <link rel='preconnect' href='https://fonts.googleapis.com' />
-        <link
-          rel='preconnect'
-          href='https://fonts.gstatic.com'
-          crossOrigin=''
-        />
         <link rel='preconnect' href='https://img.icons8.com' />
-
-        {/* Preload critical font - only essential weights */}
-        <link
-          rel='preload'
-          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
-          as='style'
-          crossOrigin=''
-        />
-
-        {/* Load fonts optimally with font-display: swap */}
-        <link
-          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
-          rel='stylesheet'
-          media='print'
-          onLoad='this.media="all"'
-        />
-        <noscript>
-          <link
-            href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
-            rel='stylesheet'
-          />
-        </noscript>
 
         {/* Icons */}
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
@@ -110,7 +91,7 @@ export default function RootLayout({ children }) {
         />
         <meta name='author' content='ACM BPHC' />
       </head>
-      <body>
+      <body className={poppins.className}>
         <Providers>{children}</Providers>
       </body>
     </html>

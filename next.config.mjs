@@ -7,8 +7,8 @@ const nextConfig = {
       '@tabler/icons-react',
       'lucide-react',
     ],
-    // Temporarily disable CSS optimization to avoid critters dependency issues
-    // optimizeCss: true,
+    // Enable CSS optimization for better performance
+    optimizeCss: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
