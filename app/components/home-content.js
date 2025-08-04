@@ -3,27 +3,13 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useUser } from '@/context/userContext';
 import dynamic from 'next/dynamic';
 import pageStyles from '../page.module.css';
-
-// Dynamic imports for better performance - load only when needed
-const Section1 = dynamic(() => import('./Dashboard/section1'), {
-  loading: () => <div className={pageStyles.loading}>Loading Dashboard...</div>,
-});
-const Section2 = dynamic(() => import('./Requests/section2'), {
-  loading: () => <div className={pageStyles.loading}>Loading Requests...</div>,
-});
-const Section3 = dynamic(() => import('./Chats/section3'), {
-  loading: () => <div className={pageStyles.loading}>Loading Chats...</div>,
-});
-const Section4 = dynamic(() => import('./Forum/section4'), {
-  loading: () => <div className={pageStyles.loading}>Loading Forum...</div>,
-});
-const Section5 = dynamic(() => import('./Resources/section5'), {
-  loading: () => <div className={pageStyles.loading}>Loading Resources...</div>,
-});
-const Sidebar = dynamic(() => import('./Sidebar/sidebar'), {
-  loading: () => <div className={pageStyles.sidebarLoading}></div>,
-});
-const ScrollToTop = dynamic(() => import('./ScrollToTop/scroll-to-top'));
+import Section1 from './Dashboard/section1';
+import Section2 from './Requests/section2';
+import Section3 from './Chats/section3';
+import Section4 from './Forum/section4';
+import Section5 from './Resources/section5';
+import Sidebar from './Sidebar/sidebar';
+import ScrollToTop from './ScrollToTop/scroll-to-top';
 
 export default function HomeContent() {
   const [activeSection, setActiveSection] = useState('dashboard');

@@ -70,19 +70,27 @@ export default function RootLayout({ children }) {
         />
         <link rel='preconnect' href='https://img.icons8.com' />
 
-        {/* Preload critical font */}
+        {/* Preload critical font - only essential weights */}
         <link
           rel='preload'
-          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'
+          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
           as='style'
           crossOrigin=''
         />
 
-        {/* Load fonts optimally */}
+        {/* Load fonts optimally with font-display: swap */}
         <link
-          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'
+          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
           rel='stylesheet'
+          media='print'
+          onLoad='this.media="all"'
         />
+        <noscript>
+          <link
+            href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap'
+            rel='stylesheet'
+          />
+        </noscript>
 
         {/* Icons */}
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />

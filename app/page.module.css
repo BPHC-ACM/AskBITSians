@@ -20,10 +20,12 @@
   flex-grow: 1;
   width: 100%;
   font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  font-display: swap;
   overflow-y: auto;
   transition: margin-left 0.2s ease-in-out; /* Faster transition */
   position: relative;
   min-height: 100vh; /* Prevent layout shift */
+  contain: layout style paint;
 }
 
 .mainCollapsed {
@@ -82,6 +84,17 @@
   width: 40px;
   height: 40px;
   border: 4px solid #e5e7eb;
+  border-top: 4px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+  will-change: transform;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
   border-top: 4px solid #3b82f6;
   border-radius: 50%;
   animation: spin 1s linear infinite;

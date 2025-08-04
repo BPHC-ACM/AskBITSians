@@ -1,71 +1,73 @@
 .scrollToTop {
-	font-family: 'Poppins', sans-serif;
-	position: fixed;
-	bottom: 2rem;
-	right: 2rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 8px;
-	padding: 10px 16px;
-	border-radius: 50px;
-	background-color: #222;
-	color: white;
-	border: none;
-	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-	cursor: pointer;
-	opacity: 0;
-	transform: translateY(20px);
-	transition: opacity 0.3s ease, transform 0.3s ease,
-		background-color 0.2s ease, box-shadow 0.2s ease;
-	z-index: -1;
-	font-size: 14px;
-	font-weight: 500;
-	letter-spacing: 0.3px;
-	white-space: nowrap;
+  font-family: 'Poppins', sans-serif;
+  font-display: swap;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 50px;
+  background-color: #222;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.2s ease,
+    box-shadow 0.2s ease;
+  z-index: -1;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+  will-change: opacity, transform;
 }
 
 .scrollToTop.visible {
-	opacity: 1;
-	z-index: 1000;
-	transform: translateY(0) scale(1);
+  opacity: 1;
+  z-index: 1000;
+  transform: translateY(0) scale(1);
 }
 
 .scrollToTop:hover {
-	background-color: #333;
-	transform: translateY(-2px) scale(1.03);
-	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  background-color: #333;
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
 
 .scrollToTop:focus {
-	outline: none;
+  outline: none;
 }
 
 .icon {
-	transition: transform 0.2s ease;
-	flex-shrink: 0;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
-	.scrollToTop {
-		bottom: 1.5rem;
-		right: 1.5rem;
-		padding: 8px;
-		gap: 0;
-	}
+  .scrollToTop {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 8px;
+    gap: 0;
+  }
 
-	.scrollToTop span {
-		display: none;
-	}
+  .scrollToTop span {
+    display: none;
+  }
 
-	.scrollToTop .icon {
-		margin: 0;
-	}
+  .scrollToTop .icon {
+    margin: 0;
+  }
 }
 
 @media (max-width: 480px) {
-	.scrollToTop {
-		bottom: 1rem;
-		right: 1rem;
-	}
+  .scrollToTop {
+    bottom: 1rem;
+    right: 1rem;
+  }
 }
