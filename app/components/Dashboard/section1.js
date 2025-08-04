@@ -131,7 +131,7 @@ export default function Section1({ setActiveSection }) {
         width: '90px',
         height: '90px',
         marginBottom: '1rem',
-        backgroundImage: 'url(/askbitsians-logo.png)',
+        backgroundImage: 'url(/askbitsians-logo.webp)',
         backgroundSize: 'contain',
         backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',

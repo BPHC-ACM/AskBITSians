@@ -359,7 +359,7 @@ export default function ChatsMain({ selectedRoom, userId, setSelectedRoom }) {
             transition={{ duration: 0.25 }}
             className='defaultmsg'
           >
-            <img src='/askbitsians-logo.png' alt='AskBITSians Logo' />
+            <img src='/askbitsians-logo.webp' alt='AskBITSians Logo' />
             <p>Connect with alumni. Accelerate your success.</p>
           </motion.div>
         )}

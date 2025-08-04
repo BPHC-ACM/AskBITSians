@@ -6,7 +6,7 @@ export default function Header() {
     <header className={styles.header}>
       <div className={styles.logoContainer}>
         <Image
-          src='/askbitsians-logo.png'
+          src='/askbitsians-logo.webp'
           alt='AskBITSians Logo'
           width={40}
           height={40}

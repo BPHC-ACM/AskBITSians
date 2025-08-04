@@ -75,7 +75,7 @@ export default function RootLayout({ children }) {
 
         {/* Icons */}
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
-        <link rel='icon' type='image/png' href='/askbitsians-icon.png' />
+        <link rel='icon' type='image/webp' href='/askbitsians-icon.webp' />
         <meta
           name='google-site-verification'
           content='KDTHyNvfLy_eV1Ci1GoZfGVSrAbZh-7U3C8kYDPAYxc'

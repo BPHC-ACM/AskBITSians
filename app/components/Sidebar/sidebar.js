@@ -217,7 +217,7 @@ const Sidebar = forwardRef(function Sidebar(
             </button>
           )}
           <img
-            src='/askbitsians-logo.png'
+            src='/askbitsians-logo.webp'
             width={isExpanded ? 162 : 50}
             height={isExpanded ? 150 : 46}
             alt='AskBITSians Logo'
