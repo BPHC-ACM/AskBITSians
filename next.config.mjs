@@ -7,7 +7,8 @@ const nextConfig = {
       '@tabler/icons-react',
       'lucide-react',
     ],
-    optimizeCss: true,
+    // Temporarily disable CSS optimization to avoid critters dependency issues
+    // optimizeCss: true,
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -42,8 +43,6 @@ const nextConfig = {
   compress: true,
   // Enable React strict mode for better performance insights
   reactStrictMode: true,
-  // Enable SWC minification for better performance
-  swcMinify: true,
 };
 
 export default nextConfig;
