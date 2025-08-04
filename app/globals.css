@@ -35,18 +35,18 @@ a {
 
 @media (max-width: 1299px) {
   html {
-    zoom: 0.9;
+    font-size: 14px; /* Use font-size instead of zoom for better performance */
   }
 }
 
 @media (max-width: 1099px) {
   html {
-    zoom: 0.8;
+    font-size: 13px; /* Use font-size instead of zoom for better performance */
   }
 }
 
 @media (max-width: 767px) {
   html {
-    zoom: 1;
+    font-size: 16px; /* Reset to normal on mobile */
   }
 }

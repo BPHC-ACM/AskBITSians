@@ -61,12 +61,30 @@ export default function RootLayout({ children }) {
   return (
     <html lang='en'>
       <head>
+        {/* Preconnect to third-party origins for performance */}
+        <link rel='preconnect' href='https://fonts.googleapis.com' />
         <link
-          href='https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap'
+          rel='preconnect'
+          href='https://fonts.gstatic.com'
+          crossOrigin=''
+        />
+        <link rel='preconnect' href='https://img.icons8.com' />
+
+        {/* Preload critical font */}
+        <link
+          rel='preload'
+          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'
+          as='style'
+          crossOrigin=''
+        />
+
+        {/* Load fonts optimally */}
+        <link
+          href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap'
           rel='stylesheet'
         />
-        <title>AskBITSians | Connect with Alumni </title>
-        <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
+
+        {/* Icons */}
         <link rel='icon' type='image/x-icon' href='/askbitsians-icon.ico' />
         <link rel='icon' type='image/png' href='/askbitsians-icon.png' />
         <meta

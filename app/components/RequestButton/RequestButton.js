@@ -176,7 +176,11 @@ export default function RequestButton({ studentId, onRequestSuccess }) {
 
   return (
     <>
-      <button onClick={() => setIsOpen(true)} className={styles.button}>
+      <button
+        onClick={() => setIsOpen(true)}
+        className={styles.button}
+        aria-label='Create new chat request'
+      >
         NEW
       </button>
 
@@ -325,6 +329,7 @@ export default function RequestButton({ studentId, onRequestSuccess }) {
                     type='button'
                     onClick={() => setIsOpen(false)}
                     className={styles.buttonSecondary}
+                    aria-label='Cancel request creation'
                   >
                     Cancel
                   </button>
@@ -332,6 +337,7 @@ export default function RequestButton({ studentId, onRequestSuccess }) {
                     type='submit'
                     disabled={isLoading}
                     className={styles.button}
+                    aria-label='Submit chat request'
                   >
                     {isLoading ? 'Creating...' : 'Create Request'}
                   </button>

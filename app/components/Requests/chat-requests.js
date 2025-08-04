@@ -129,7 +129,11 @@ const ChatRequestModal = ({ request, onClose, onStatusChange }) => {
         className={styles.modalContainer}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className={styles.closeButton} onClick={onClose}>
+        <button
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label='Close modal'
+        >
           &times;
         </button>
 
@@ -180,6 +184,7 @@ const ChatRequestModal = ({ request, onClose, onStatusChange }) => {
             whileTap={{ scale: 0.95 }}
             onClick={() => handleStatusUpdate('declined')}
             disabled={loadingStatus !== null}
+            aria-label='Decline chat request'
           >
             {loadingStatus === 'declined' ? (
               <>
@@ -197,6 +202,7 @@ const ChatRequestModal = ({ request, onClose, onStatusChange }) => {
             whileTap={{ scale: 0.95 }}
             onClick={() => handleStatusUpdate('accepted')}
             disabled={loadingStatus !== null}
+            aria-label='Accept chat request'
           >
             {loadingStatus === 'accepted' ? (
               <>
@@ -276,6 +282,7 @@ export default function ChatRequests({ userId }) {
         <button
           className={styles.pastRequestsButton}
           onClick={fetchPastRequests}
+          aria-label='View past chat requests'
         >
           Past Requests
         </button>
@@ -332,6 +339,7 @@ export default function ChatRequests({ userId }) {
             <button
               className={styles.closeButton}
               onClick={() => setShowPastRequests(false)}
+              aria-label='Close past requests modal'
             >
               &times;
             </button>

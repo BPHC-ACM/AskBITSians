@@ -231,6 +231,7 @@ export default function Sidebar({
                   activeSection === section.sectionId ? styles.active : ''
                 }`}
                 onClick={() => handleClick(section.sectionId)}
+                aria-label={`Navigate to ${section.name} section`}
               >
                 {section.icon}
                 <motion.span
@@ -260,6 +261,7 @@ export default function Sidebar({
                   <button
                     className={styles.actionButton}
                     onClick={handleOpenUpdateModal}
+                    aria-label='Update student profile'
                   >
                     <IconUserEdit size={18} />
                     <motion.span
@@ -275,6 +277,7 @@ export default function Sidebar({
                   <button
                     className={styles.actionButton}
                     onClick={handleOpenUpdateModal}
+                    aria-label='Update alumni profile'
                   >
                     <IconUserEdit size={18} />
                     <motion.span
@@ -286,7 +289,11 @@ export default function Sidebar({
                     </motion.span>
                   </button>
                 )}
-                <button className={styles.actionButton} onClick={handleLogout}>
+                <button
+                  className={styles.actionButton}
+                  onClick={handleLogout}
+                  aria-label='Logout'
+                >
                   <IconLogout size={18} />
                   <motion.span
                     variants={textVariants}
@@ -337,6 +344,11 @@ export default function Sidebar({
                 className={styles.pillButton}
                 onClick={() => setShowUserActions((prev) => !prev)}
                 title={
+                  user.name
+                    ? `User profile options for ${user.name}`
+                    : 'User profile options'
+                }
+                aria-label={
                   user.name
                     ? `User profile options for ${user.name}`
                     : 'User profile options'

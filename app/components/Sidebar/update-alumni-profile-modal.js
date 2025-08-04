@@ -218,7 +218,11 @@ export default function UpdateAlumniProfileModal({
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label='Close modal'
+        >
           <IconX size={24} />
         </button>
         <h2>Update Your Alumni Profile</h2>
@@ -323,6 +327,7 @@ export default function UpdateAlumniProfileModal({
                           padding: '0',
                           marginLeft: '0.25rem',
                         }}
+                        aria-label={`Remove ${expertise} expertise`}
                       >
                         ×
                       </button>
@@ -381,6 +386,7 @@ export default function UpdateAlumniProfileModal({
                     gap: '0.5rem',
                     fontSize: '0.9rem',
                   }}
+                  aria-label='Add custom expertise area'
                 >
                   <IconPlus size={16} />
                   Add custom expertise
@@ -425,6 +431,7 @@ export default function UpdateAlumniProfileModal({
                       borderRadius: '6px',
                       cursor: 'pointer',
                     }}
+                    aria-label='Add custom expertise'
                   >
                     Add
                   </button>
@@ -442,6 +449,7 @@ export default function UpdateAlumniProfileModal({
                       borderRadius: '6px',
                       cursor: 'pointer',
                     }}
+                    aria-label='Cancel custom expertise entry'
                   >
                     Cancel
                   </button>
@@ -454,6 +462,7 @@ export default function UpdateAlumniProfileModal({
             type='submit'
             disabled={isLoading || userLoading}
             className={styles.submitButton}
+            aria-label='Submit alumni profile update'
           >
             {isLoading
               ? 'Updating...'

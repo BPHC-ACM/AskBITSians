@@ -413,7 +413,6 @@ export default function Section1({ setActiveSection }) {
                   ...styles.header.logoContainer,
                   margin: viewport.isMobile ? '0 auto 1rem' : '0 0 1rem',
                 }}
-                aria-label='AskBITSians Logo'
               />
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -452,6 +451,7 @@ export default function Section1({ setActiveSection }) {
                     fontSize: '1rem',
                     width: viewport.isMobile ? '100%' : 'auto',
                   }}
+                  aria-label='Start connecting with messages section'
                 >
                   Start Connecting{' '}
                   <ArrowRight size={20} style={{ marginLeft: '8px' }} />

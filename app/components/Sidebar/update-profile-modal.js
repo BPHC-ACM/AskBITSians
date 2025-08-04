@@ -128,7 +128,11 @@ export default function UpdateProfileModal({
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeButton} onClick={onClose}>
+        <button
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label='Close modal'
+        >
           <IconX size={24} />
         </button>
         <h2>Update Your Profile</h2>
@@ -187,6 +191,7 @@ export default function UpdateProfileModal({
             type='submit'
             disabled={isLoading || userLoading}
             className={styles.submitButton}
+            aria-label='Submit profile update'
           >
             {isLoading
               ? 'Updating...'
