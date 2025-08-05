@@ -1,0 +1,114 @@
+/* Vision Mission Component Styles */
+.section {
+  padding: 6rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.headerContainer {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.sectionHeading {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  color: #2d3748; /* textDark */
+}
+
+.divider {
+  width: 5rem;
+  height: 5px;
+  border-radius: 4px;
+  margin-bottom: 2rem;
+  background: linear-gradient(
+    to right,
+    #85c5e8,
+    #fdc939
+  ); /* primary to secondary */
+  margin: 0 auto 2rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cardIcon {
+  border-radius: 8px;
+  padding: 10px;
+  margin-right: 1rem;
+}
+
+.cardIconVision {
+  background-color: rgba(133, 197, 232, 0.125); /* bitsBlue with 20% opacity */
+}
+
+.cardIconMission {
+  background-color: rgba(253, 201, 57, 0.125); /* bitsGold with 20% opacity */
+}
+
+.cardTitle {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.5rem;
+  color: #2d3748; /* textDark */
+  margin: 0;
+}
+
+.cardDescription {
+  color: #718096; /* textMuted */
+  font-size: 1rem;
+  margin: 0;
+}
+
+.iconVision {
+  color: #85c5e8; /* bitsBlue */
+}
+
+.iconMission {
+  color: #fdc939; /* bitsGold */
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .section {
+    padding: 4rem 1.5rem;
+  }
+
+  .sectionHeading {
+    font-size: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

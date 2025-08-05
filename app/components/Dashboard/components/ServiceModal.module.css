@@ -1,0 +1,108 @@
+/*
+ * FIX: Use `position: fixed` to ensure the backdrop covers the entire
+ * visible screen, regardless of page scroll.
+*/
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(26, 32, 44, 0.7); /* glassBg */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2100;
+  padding: 1rem;
+}
+
+.modal {
+  width: 90%;
+  max-width: 42rem;
+  background-color: white;
+  border-radius: 12px;
+  max-height: 85vh; /* Limit the modal's height */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+  text-align: left;
+  z-index: 2150;
+  display: flex;
+  flex-direction: column;
+  /*
+   * FIX: Remove `overflow: hidden`. This was preventing the internal
+   * modal body from being able to show its own scrollbar.
+  */
+}
+
+.modalHeader {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 1.8rem;
+  color: #2d3748; /* textDark */
+  text-align: center;
+  padding: 1.5rem 2rem 1rem; /* Adjusted padding */
+  border-bottom: 2px solid #f7f9fa; /* lightBg */
+  flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+/*
+ * FIX: This is now the dedicated scrolling container.
+ * `flex-grow: 1` allows it to fill the available space, and
+ * `overflow-y: auto` adds a scrollbar only when needed.
+*/
+.modalBody {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem 2rem; /* Adjusted padding */
+}
+
+.detailPoint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75em;
+  color: #718096; /* textMuted */
+  margin-bottom: 1rem; /* Added spacing between points */
+}
+
+.bullet {
+  color: #85c5e8; /* primary */
+  font-weight: 600;
+  line-height: 1.5rem; /* Align bullet with text */
+}
+
+.pointText {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5rem; /* Ensure consistent line height */
+}
+
+.modalFooter {
+  padding: 1.5rem 2rem;
+  width: 100%;
+  border-top: 2px solid #f7f9fa; /* lightBg */
+  flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+.modalCloseButton {
+  background-color: #a0aec0; /* textMutedLight */
+  color: #1a202c; /* darkBg */
+  padding: 0.7rem 1.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: block; /* Center using margin auto */
+  margin: 0 auto;
+  transition: background-color 0.2s ease;
+}
+
+.modalCloseButton:hover {
+  background-color: #cbd5e0;
+}
+
+@media (max-width: 768px) {
+  .modal {
+    width: 95%;
+  }
+}

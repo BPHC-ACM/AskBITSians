@@ -1,128 +1,119 @@
-import React, { memo } from 'react';
+'use client';
+
+import React from 'react';
 import { motion } from 'framer-motion';
-import { colors, getIconBgColor } from '../hooks/useViewport';
+import {
+  IconUsers,
+  IconMessages,
+  IconBooks,
+  IconArrowRight,
+  IconInfoCircle,
+} from '@tabler/icons-react';
+import styles from './ServiceCard.module.css';
 
-const ServiceCard = memo(({ service, index, onShowMore, viewport, icons }) => {
-  const IconComponent = icons[service.icon];
+// This is now a self-contained, performant component
+const ServiceCard = React.memo(
+  ({ service, index, onShowMore, setActiveSection, icons, cardColor }) => {
+    const IconComponent = icons[service.icon] || IconBooks;
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        delay: index * 0.2,
-        ease: [0.25, 0.46, 0.45, 0.94],
+    const getServiceActionProps = (serviceType) => {
+      // ... (This function can remain the same or be moved to the parent)
+      switch (serviceType) {
+        case 'forum':
+          return {
+            buttonText: 'Community',
+            ButtonIcon: IconUsers,
+            targetSection: 'community',
+          };
+        case 'chat':
+          return {
+            buttonText: 'Connect',
+            ButtonIcon: IconMessages,
+            targetSection: 'messages',
+          };
+        case 'resources':
+          return {
+            buttonText: 'Resources',
+            ButtonIcon: IconBooks,
+            targetSection: 'resources',
+          };
+        default:
+          return {
+            buttonText: 'Go to Section',
+            ButtonIcon: IconArrowRight,
+            targetSection: 'dashboard',
+          };
+      }
+    };
+
+    const { buttonText, ButtonIcon, targetSection } = getServiceActionProps(
+      service.icon
+    );
+
+    // Define CSS variables based on the cardColor prop
+    const cardStyle = {
+      '--card-color': cardColor,
+      '--card-color-transparent': `${cardColor}CC`,
+      '--card-color-shadow': `${cardColor}40`,
+      '--card-text-color': cardColor === '#FDC939' ? '#1a202c' : '#ffffff',
+    };
+
+    const cardVariants = {
+      hidden: { opacity: 0, y: 30 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.5, delay: index * 0.1 },
       },
-    },
-  };
+    };
 
-  const styles = {
-    serviceCard: {
-      background: `linear-gradient(135deg, ${colors.white} 0%, #fafafa 100%)`,
-      border: `2px solid ${colors.lightGray}`,
-      borderRadius: '24px',
-      padding: viewport.isMobile ? '2rem' : '2.5rem',
-      height: '100%',
-      position: 'relative',
-      cursor: 'pointer',
-      transition: 'all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
-      overflow: 'hidden',
-    },
-    iconContainer: {
-      width: '80px',
-      height: '80px',
-      borderRadius: '20px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      marginBottom: '1.5rem',
-      background: `linear-gradient(135deg, ${getIconBgColor(
-        index
-      )}, ${getIconBgColor(index)}CC)`,
-      boxShadow: `0 8px 24px ${getIconBgColor(index)}40`,
-    },
-    serviceTitle: {
-      fontSize: viewport.isMobile ? '1.3rem' : '1.5rem',
-      fontWeight: '700',
-      color: colors.dark,
-      marginBottom: '0.75rem',
-      lineHeight: '1.3',
-    },
-    serviceDescription: {
-      fontSize: '1rem',
-      color: colors.gray,
-      lineHeight: '1.6',
-      marginBottom: '1.5rem',
-    },
-    learnMoreButton: {
-      background: 'transparent',
-      border: `2px solid ${getIconBgColor(index)}`,
-      color: getIconBgColor(index),
-      padding: '0.75rem 1.5rem',
-      borderRadius: '12px',
-      fontSize: '0.9rem',
-      fontWeight: '600',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-    },
-  };
-
-  const handleCardHover = (isHovered) => {
-    if (isHovered) {
-      return {
-        ...styles.serviceCard,
-        transform: 'translateY(-8px)',
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.12)',
-        borderColor: getIconBgColor(index),
-      };
-    }
-    return styles.serviceCard;
-  };
-
-  return (
-    <motion.div
-      variants={cardVariants}
-      initial='hidden'
-      whileInView='visible'
-      viewport={{ once: true, amount: 0.2 }}
-      style={styles.serviceCard}
-      whileHover={{
-        y: -8,
-        boxShadow: '0 20px 40px rgba(0, 0, 0, 0.12)',
-        borderColor: getIconBgColor(index),
-      }}
-      onClick={() => onShowMore(service)}
-    >
-      <div style={styles.iconContainer}>
-        <IconComponent size={36} color={colors.white} stroke={2.5} />
-      </div>
-
-      <h3 style={styles.serviceTitle}>{service.heading}</h3>
-      <p style={styles.serviceDescription}>{service.short_description}</p>
-
-      <button
-        style={styles.learnMoreButton}
-        onMouseEnter={(e) => {
-          e.target.style.background = getIconBgColor(index);
-          e.target.style.color = colors.white;
+    return (
+      <motion.div
+        key={service.heading}
+        variants={cardVariants}
+        initial='hidden'
+        whileInView='visible'
+        viewport={{ once: true, amount: 0.2 }}
+        whileHover={{
+          y: -8,
+          boxShadow:
+            '0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04)',
         }}
-        onMouseLeave={(e) => {
-          e.target.style.background = 'transparent';
-          e.target.style.color = getIconBgColor(index);
-        }}
+        className={styles.serviceCard}
+        style={cardStyle} // Apply the CSS variables here
       >
-        Learn More
-      </button>
-    </motion.div>
-  );
-});
+        <div className={styles.cardContent}>
+          <div className={styles.iconContainer}>
+            <IconComponent size={26} color='#ffffff' />
+          </div>
+          <h3 className={styles.serviceTitle}>{service.heading}</h3>
+          <p className={styles.serviceDescription}>
+            {service.short_description}
+          </p>
+        </div>
+
+        <div className={styles.buttonContainer}>
+          <motion.button
+            onClick={() => setActiveSection(targetSection)}
+            whileTap={{ scale: 0.98 }}
+            className={styles.actionButton}
+          >
+            <ButtonIcon size={16} />
+            {buttonText}
+          </motion.button>
+          <motion.button
+            onClick={() => onShowMore(service)}
+            whileTap={{ scale: 0.98 }}
+            className={styles.learnMoreButton}
+          >
+            <IconInfoCircle size={16} />
+            Learn More
+          </motion.button>
+        </div>
+      </motion.div>
+    );
+  }
+);
 
 ServiceCard.displayName = 'ServiceCard';
-
 export default ServiceCard;

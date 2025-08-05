@@ -1,0 +1,91 @@
+.footer {
+  background-color: #1a202c; /* colors.darkBg */
+  color: #a0aec0; /* colors.textMutedLight */
+  padding: 5rem 1.5rem 2rem;
+  border-top: 6px solid #85c5e8; /* colors.primary */
+}
+
+.container {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+.brandHeading {
+  /* from fontStyles.heading */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  /* component-specific styles */
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.brandDescription {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 24rem;
+}
+
+.linksHeading {
+  /* from fontStyles.heading */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  /* component-specific styles */
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  color: white;
+  padding-left: 1rem;
+}
+
+.quickLinks {
+  border-left: 4px solid #fdc939; /* colors.secondary */
+}
+
+.exploreLinks {
+  border-left: 4px solid #ea1425; /* colors.tertiary */
+}
+
+.linksList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.exploreLink {
+  cursor: pointer;
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 5rem;
+  padding-top: 2rem;
+  border-top: 1px solid #4a5568;
+  font-size: 0.9rem;
+  color: #a0aec0; /* colors.textMutedLight */
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,107 @@
+.serviceCard {
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  border: 2px solid #edf2f7; /* lightGray */
+  border-radius: 24px;
+  padding: 1.75rem;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardContent {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.iconContainer {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  background: var(--card-color-transparent);
+}
+
+.serviceTitle {
+  /* FONT FIX: Add the font-family from the original fontStyles.heading */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c; /* dark */
+  margin-bottom: 0.75rem;
+  line-height: 1.3;
+}
+
+.serviceDescription {
+  /* FONT FIX: Add the font-family from the original fontStyles.body */
+  font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-size: 1rem;
+  color: #718096; /* gray */
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto; /* Pushes buttons to the bottom */
+}
+
+.actionButton,
+.learnMoreButton {
+  /* FONT FIX: Add the font-family from the original fontStyles.body */
+  font-family: 'Inter', sans-serif, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  flex-grow: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.actionButton {
+  border: none;
+  background: var(--card-color);
+  color: var(--card-text-color); /* Variable for text color */
+}
+
+.actionButton:hover {
+  filter: brightness(1.1);
+}
+
+.learnMoreButton {
+  background: transparent;
+  border: 2px solid var(--card-color);
+  color: var(--card-color);
+}
+
+.learnMoreButton:hover {
+  background: var(--card-color);
+  color: #ffffff; /* white */
+}
+
+@media (max-width: 768px) {
+  .serviceCard {
+    padding: 2rem;
+  }
+  .serviceTitle {
+    font-size: 1.3rem;
+  }
+}
