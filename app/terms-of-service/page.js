@@ -143,7 +143,7 @@ export default function TermsOfService() {
         {/* Other sections would follow the same pattern... */}
 
         <section>
-          <h2 style={styles.h2}>10. Contact Us</h2>
+          <h2 style={styles.h2}>4. Contact Us</h2>
           <p style={styles.p}>
             If you have any questions about these Terms, please contact us:
           </p>
