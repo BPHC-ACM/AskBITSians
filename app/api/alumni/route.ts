@@ -4,10 +4,9 @@ import { supabase } from '@/utils/supabaseClient';
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const id = searchParams.get('id'); // For fetching specific alumni
-  const domain = searchParams.get('domain'); // Changed from expertise
-  const company = searchParams.get('company');
-  const role = searchParams.get('role'); // New parameter for job roles
-  const graduationYear = searchParams.get('graduation_year');
+  const domain = searchParams.get('domain');
+  const role = searchParams.get('role');
+  const type = searchParams.get('type'); // For filtering by type
 
   try {
     let query = supabase.from('alumni').select('*');
@@ -18,19 +17,11 @@ export async function GET(request) {
     }
 
     if (domain) {
-      query = query.contains('areas_of_expertise', [domain]);
-    }
-
-    if (company) {
-      query = query.ilike('company', `%${company}%`);
+      query = query.eq('domain', domain);
     }
 
     if (role) {
-      query = query.ilike('job_title', `%${role}%`);
-    }
-
-    if (graduationYear) {
-      query = query.eq('graduation_year', parseInt(graduationYear));
+      query = query.eq('role', role);
     }
 
     const { data, error } = await query;
@@ -54,10 +45,10 @@ export async function POST(request) {
       name,
       email,
       company,
-      job_title,
+      role,
+      domain,
       graduation_year,
       linkedin_profile_url,
-      areas_of_expertise,
     } = await request.json();
 
     if (!name || !email) {
@@ -74,10 +65,10 @@ export async function POST(request) {
           name,
           email,
           company,
-          job_title,
+          role,
+          domain,
           graduation_year,
           linkedin_profile_url,
-          areas_of_expertise: areas_of_expertise || [],
         },
       ])
       .select()
@@ -105,10 +96,10 @@ export async function PATCH(request) {
       id,
       name,
       company,
-      job_title,
+      role,
+      domain,
       graduation_year,
       linkedin_profile_url,
-      areas_of_expertise,
     } = await request.json();
 
     if (!id) {
@@ -121,11 +112,11 @@ export async function PATCH(request) {
     const updateData: any = {};
     if (name) updateData.name = name;
     if (company) updateData.company = company;
-    if (job_title) updateData.job_title = job_title;
+    if (role) updateData.role = role;
+    if (domain) updateData.domain = domain;
     if (graduation_year) updateData.graduation_year = graduation_year;
     if (linkedin_profile_url)
       updateData.linkedin_profile_url = linkedin_profile_url;
-    if (areas_of_expertise) updateData.areas_of_expertise = areas_of_expertise;
 
     const { data, error } = await supabase
       .from('alumni')

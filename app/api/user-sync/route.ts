@@ -100,7 +100,7 @@ async function handleAlumnusSync(email: string, name: string) {
   // Check if alumnus exists
   const { data: alumnusExists } = await supabase
     .from('alumni')
-    .select('id, company, job_title')
+    .select('id, company, role, domain')
     .eq('email', email)
     .maybeSingle();
 
@@ -116,7 +116,7 @@ async function handleAlumnusSync(email: string, name: string) {
   const { data: newAlumnus, error: insertError } = await supabase
     .from('alumni')
     .insert({ email, name })
-    .select('id, company, job_title')
+    .select('id, company, role, domain')
     .single();
 
   if (insertError) throw insertError;

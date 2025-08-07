@@ -54,8 +54,10 @@ export default function Section5() {
           alumni.name.toLowerCase().includes(lowerCaseSearch) ||
           (alumni.company &&
             alumni.company.toLowerCase().includes(lowerCaseSearch)) ||
-          (alumni.job_title &&
-            alumni.job_title.toLowerCase().includes(lowerCaseSearch))
+          (alumni.role &&
+            alumni.role.toLowerCase().includes(lowerCaseSearch)) ||
+          (alumni.domain &&
+            alumni.domain.toLowerCase().includes(lowerCaseSearch))
         );
       }),
     [sortedProfs, searchTerm]
@@ -153,11 +155,11 @@ export default function Section5() {
           <div className={styles.searchContainer}>
             <input
               type='search'
-              placeholder='Search'
+              placeholder='Search by name, company, role, or domain'
               value={searchTerm}
               onChange={handleSearchChange}
               className={styles.searchInput}
-              aria-label='Search alumni by name, company, or job title'
+              aria-label='Search alumni by name, company, role, or domain'
             />
           </div>
 
@@ -200,11 +202,19 @@ export default function Section5() {
                             {' ' + (alumni.company || 'Not specified')}
                           </span>
                         </p>
-                        {alumni.job_title && (
+                        {alumni.role && (
                           <p className={styles.profChamber}>
                             <span className={styles.chamberLabel}>Role:</span>
                             <span className={styles.chamberValue}>
-                              {' ' + alumni.job_title}
+                              {' ' + alumni.role}
+                            </span>
+                          </p>
+                        )}
+                        {alumni.domain && (
+                          <p className={styles.profChamber}>
+                            <span className={styles.chamberLabel}>Domain:</span>
+                            <span className={styles.chamberValue}>
+                              {' ' + alumni.domain}
                             </span>
                           </p>
                         )}

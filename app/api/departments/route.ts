@@ -3,35 +3,38 @@ import { supabase } from '@/utils/supabaseClient';
 
 export async function GET() {
   try {
+    // Query the database to get all distinct roles and domains from the alumni table
     const { data: alumni, error } = await supabase
       .from('alumni')
-      .select('areas_of_expertise, company, job_title');
+      .select('role, domain');
 
-    if (error) throw error;
+    if (error) {
+      console.error('Database error:', error);
+      throw error;
+    }
 
-    const domains = new Set(); // Changed from 'expertise'
-    const companies = new Set();
-    const roles = new Set(); // New: job roles/titles
+    // Extract unique roles and domains
+    const rolesSet = new Set<string>();
+    const domainsSet = new Set<string>();
 
     alumni.forEach((alumnus) => {
-      if (alumnus.areas_of_expertise) {
-        alumnus.areas_of_expertise.forEach((area) => domains.add(area));
+      if (alumnus.role) {
+        rolesSet.add(alumnus.role);
       }
-      if (alumnus.company) {
-        companies.add(alumnus.company);
-      }
-      if (alumnus.job_title) {
-        roles.add(alumnus.job_title);
+      if (alumnus.domain) {
+        domainsSet.add(alumnus.domain);
       }
     });
 
+    const domains = Array.from(domainsSet).sort();
+    const roles = Array.from(rolesSet).sort();
+
     return NextResponse.json({
-      domains: Array.from(domains).sort(), // Changed from 'expertise'
-      companies: Array.from(companies).sort(),
-      roles: Array.from(roles).sort(), // New field
+      domains,
+      roles,
     });
   } catch (error) {
-    console.error('Error fetching domains, companies, and roles:', error);
+    console.error('Error fetching domains and roles:', error);
     return NextResponse.json(
       { error: 'Failed to fetch alumni categories' },
       { status: 500 }

@@ -154,7 +154,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
                 identifier:
                   role === 'student'
                     ? userData.identifier
-                    : userData.company || userData.job_title || 'Alumni',
+                    : userData.company || userData.role || 'Alumni',
               }
             : null
         );

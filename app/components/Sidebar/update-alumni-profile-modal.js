@@ -2,39 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import styles from './update-profile-modal.module.css';
-import { IconX, IconPlus } from '@tabler/icons-react';
+import { IconX } from '@tabler/icons-react';
 import { useUser } from '@/context/userContext';
 import {
   profileUpdated,
   error as showError,
 } from '../common/notification-service';
-
-const DOMAIN_OPTIONS = [
-  'Technology',
-  'Software Engineering',
-  'Data Science',
-  'Machine Learning',
-  'Artificial Intelligence',
-  'Cybersecurity',
-  'Product Management',
-  'Design',
-  'Finance',
-  'Investment Banking',
-  'Consulting',
-  'Marketing',
-  'Sales',
-  'Operations',
-  'Research',
-  'Academia',
-  'Entrepreneurship',
-  'Healthcare',
-  'Legal',
-  'Government',
-  'Non-Profit',
-  'Media',
-  'Entertainment',
-  'Other',
-];
 
 export default function UpdateAlumniProfileModal({
   isOpen,
@@ -51,27 +24,29 @@ export default function UpdateAlumniProfileModal({
 
   const [formData, setFormData] = useState({
     company: '',
-    job_title: '',
+    role: '',
+    domain: '',
     graduation_year: '',
     linkedin_profile_url: '',
-    areas_of_expertise: [],
   });
-  const [newExpertise, setNewExpertise] = useState('');
-  const [showCustomExpertise, setShowCustomExpertise] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [roleOptions, setRoleOptions] = useState([]);
+  const [domainOptions, setDomainOptions] = useState([]);
+  const [isLoadingCategories, setIsLoadingCategories] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       setFormData({
         company: '',
-        job_title: '',
+        role: '',
+        domain: '',
         graduation_year: '',
         linkedin_profile_url: '',
-        areas_of_expertise: [],
       });
       setIsLoading(false);
-      setNewExpertise('');
-      setShowCustomExpertise(false);
+
+      // Fetch categories when modal opens
+      fetchCategories();
 
       // Load existing data if available
       if (!userLoading && user && user.role === 'alumnus') {
@@ -80,6 +55,23 @@ export default function UpdateAlumniProfileModal({
       }
     }
   }, [isOpen, user, userLoading]);
+
+  const fetchCategories = async () => {
+    setIsLoadingCategories(true);
+    try {
+      const response = await fetch('/api/categories');
+      if (response.ok) {
+        const data = await response.json();
+        setRoleOptions(data.roles || []);
+        setDomainOptions(data.domains || []);
+      }
+    } catch (error) {
+      console.error('Error fetching categories:', error);
+      showError('Failed to load role and domain options.');
+    } finally {
+      setIsLoadingCategories(false);
+    }
+  };
 
   const fetchAlumniData = async () => {
     if (!alumniId) return;
@@ -92,10 +84,10 @@ export default function UpdateAlumniProfileModal({
           const alumni = data[0];
           setFormData({
             company: alumni.company || '',
-            job_title: alumni.job_title || '',
+            role: alumni.role || '',
+            domain: alumni.domain || '',
             graduation_year: alumni.graduation_year?.toString() || '',
             linkedin_profile_url: alumni.linkedin_profile_url || '',
-            areas_of_expertise: alumni.areas_of_expertise || [],
           });
         }
       }
@@ -113,31 +105,11 @@ export default function UpdateAlumniProfileModal({
     }));
   };
 
-  const addExpertise = (expertise) => {
-    if (expertise && !formData.areas_of_expertise.includes(expertise)) {
-      setFormData((prev) => ({
-        ...prev,
-        areas_of_expertise: [...prev.areas_of_expertise, expertise],
-      }));
-    }
-    setNewExpertise('');
-    setShowCustomExpertise(false);
-  };
-
-  const removeExpertise = (expertiseToRemove) => {
-    setFormData((prev) => ({
-      ...prev,
-      areas_of_expertise: prev.areas_of_expertise.filter(
-        (exp) => exp !== expertiseToRemove
-      ),
-    }));
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.company || !formData.job_title) {
-      showError('Company and Job Title are required.');
+    if (!formData.company || !formData.role || !formData.domain) {
+      showError('Company, Role, and Domain are required.');
       return;
     }
 
@@ -166,8 +138,8 @@ export default function UpdateAlumniProfileModal({
       const updateData = {
         id: alumniId,
         company: formData.company,
-        job_title: formData.job_title,
-        areas_of_expertise: formData.areas_of_expertise,
+        role: formData.role,
+        domain: formData.domain,
       };
 
       if (formData.graduation_year) {
@@ -234,7 +206,10 @@ export default function UpdateAlumniProfileModal({
         {userLoading && <p>Loading current data...</p>}
 
         <form onSubmit={handleSubmit}>
-          <fieldset style={{ border: 'none' }} disabled={userLoading}>
+          <fieldset
+            style={{ border: 'none' }}
+            disabled={userLoading || isLoadingCategories}
+          >
             <div className={styles.formGroup}>
               <label htmlFor='company'>Company *</label>
               <input
@@ -248,15 +223,67 @@ export default function UpdateAlumniProfileModal({
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor='job_title'>Job Title *</label>
-              <input
-                type='text'
-                id='job_title'
-                value={formData.job_title}
-                onChange={(e) => handleInputChange('job_title', e.target.value)}
-                placeholder='e.g., Software Engineer, Product Manager'
+              <label htmlFor='role'>Role *</label>
+              <select
+                id='role'
+                value={formData.role}
+                onChange={(e) => handleInputChange('role', e.target.value)}
                 required
-              />
+                disabled={isLoadingCategories}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #444',
+                  borderRadius: '6px',
+                  backgroundColor: '#333',
+                  color: '#fff',
+                  fontSize: '1rem',
+                  fontFamily: 'Poppins, sans-serif',
+                }}
+              >
+                <option value=''>
+                  {isLoadingCategories
+                    ? 'Loading roles...'
+                    : 'Select your role...'}
+                </option>
+                {roleOptions.map((role, index) => (
+                  <option key={index} value={role}>
+                    {role}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor='domain'>Domain *</label>
+              <select
+                id='domain'
+                value={formData.domain}
+                onChange={(e) => handleInputChange('domain', e.target.value)}
+                required
+                disabled={isLoadingCategories}
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  border: '1px solid #444',
+                  borderRadius: '6px',
+                  backgroundColor: '#333',
+                  color: '#fff',
+                  fontSize: '1rem',
+                  fontFamily: 'Poppins, sans-serif',
+                }}
+              >
+                <option value=''>
+                  {isLoadingCategories
+                    ? 'Loading domains...'
+                    : 'Select your domain...'}
+                </option>
+                {domainOptions.map((domain, index) => (
+                  <option key={index} value={domain}>
+                    {domain}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className={styles.formGroup}>
@@ -287,186 +314,17 @@ export default function UpdateAlumniProfileModal({
                 placeholder='https://linkedin.com/in/yourprofile'
               />
             </div>
-
-            <div className={styles.formGroup}>
-              <label>Areas of Expertise</label>
-
-              {/* Selected expertise tags */}
-              {formData.areas_of_expertise.length > 0 && (
-                <div
-                  style={{
-                    marginBottom: '0.5rem',
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    gap: '0.5rem',
-                  }}
-                >
-                  {formData.areas_of_expertise.map((expertise, index) => (
-                    <span
-                      key={index}
-                      style={{
-                        backgroundColor: '#3b82f6',
-                        color: 'white',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '1rem',
-                        fontSize: '0.8rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.25rem',
-                      }}
-                    >
-                      {expertise}
-                      <button
-                        type='button'
-                        onClick={() => removeExpertise(expertise)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          color: 'white',
-                          cursor: 'pointer',
-                          padding: '0',
-                          marginLeft: '0.25rem',
-                        }}
-                        aria-label={`Remove ${expertise} expertise`}
-                      >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                </div>
-              )}
-
-              {/* Predefined options */}
-              <div style={{ marginBottom: '0.5rem' }}>
-                <select
-                  value=''
-                  onChange={(e) => {
-                    if (e.target.value) {
-                      addExpertise(e.target.value);
-                      e.target.value = '';
-                    }
-                  }}
-                  style={{
-                    width: '100%',
-                    padding: '0.5rem',
-                    border: '1px solid #444',
-                    borderRadius: '6px',
-                    backgroundColor: '#333',
-                    color: '#fff',
-                    fontSize: '0.9rem',
-                  }}
-                >
-                  <option value=''>Select an area of expertise...</option>
-                  {DOMAIN_OPTIONS.filter(
-                    (option) => !formData.areas_of_expertise.includes(option)
-                  ).map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Custom expertise input */}
-              {!showCustomExpertise ? (
-                <button
-                  type='button'
-                  onClick={() => setShowCustomExpertise(true)}
-                  style={{
-                    backgroundColor: 'transparent',
-                    border: '1px dashed #666',
-                    color: '#ccc',
-                    padding: '0.5rem',
-                    borderRadius: '6px',
-                    cursor: 'pointer',
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem',
-                    fontSize: '0.9rem',
-                  }}
-                  aria-label='Add custom expertise area'
-                >
-                  <IconPlus size={16} />
-                  Add custom expertise
-                </button>
-              ) : (
-                <div
-                  style={{
-                    display: 'flex',
-                    gap: '0.5rem',
-                    alignItems: 'center',
-                  }}
-                >
-                  <input
-                    type='text'
-                    value={newExpertise}
-                    onChange={(e) => setNewExpertise(e.target.value)}
-                    placeholder='Enter custom expertise...'
-                    style={{
-                      flex: 1,
-                      padding: '0.5rem',
-                      border: '1px solid #444',
-                      borderRadius: '6px',
-                      backgroundColor: '#333',
-                      color: '#fff',
-                      fontSize: '0.9rem',
-                    }}
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault();
-                        addExpertise(newExpertise);
-                      }
-                    }}
-                  />
-                  <button
-                    type='button'
-                    onClick={() => addExpertise(newExpertise)}
-                    style={{
-                      backgroundColor: '#3b82f6',
-                      border: 'none',
-                      color: 'white',
-                      padding: '0.5rem',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                    }}
-                    aria-label='Add custom expertise'
-                  >
-                    Add
-                  </button>
-                  <button
-                    type='button'
-                    onClick={() => {
-                      setShowCustomExpertise(false);
-                      setNewExpertise('');
-                    }}
-                    style={{
-                      backgroundColor: 'transparent',
-                      border: '1px solid #666',
-                      color: '#ccc',
-                      padding: '0.5rem',
-                      borderRadius: '6px',
-                      cursor: 'pointer',
-                    }}
-                    aria-label='Cancel custom expertise entry'
-                  >
-                    Cancel
-                  </button>
-                </div>
-              )}
-            </div>
           </fieldset>
 
           <button
             type='submit'
-            disabled={isLoading || userLoading}
+            disabled={isLoading || userLoading || isLoadingCategories}
             className={styles.submitButton}
             aria-label='Submit alumni profile update'
           >
             {isLoading
               ? 'Updating...'
-              : userLoading
+              : userLoading || isLoadingCategories
               ? 'Loading Data...'
               : 'Update Profile'}
           </button>

@@ -6,7 +6,7 @@ export async function GET() {
   try {
     const { data: alumni, error } = await supabase
       .from('alumni')
-      .select('areas_of_expertise, company, job_title, graduation_year');
+      .select('role, domain, company, graduation_year');
 
     if (error) throw error;
 
@@ -16,14 +16,14 @@ export async function GET() {
     const years = new Set();
 
     alumni.forEach((alumnus) => {
-      if (alumnus.areas_of_expertise) {
-        alumnus.areas_of_expertise.forEach((area) => domains.add(area));
+      if (alumnus.role) {
+        roles.add(alumnus.role);
+      }
+      if (alumnus.domain) {
+        domains.add(alumnus.domain);
       }
       if (alumnus.company) {
         companies.add(alumnus.company);
-      }
-      if (alumnus.job_title) {
-        roles.add(alumnus.job_title);
       }
       if (alumnus.graduation_year) {
         years.add(alumnus.graduation_year);

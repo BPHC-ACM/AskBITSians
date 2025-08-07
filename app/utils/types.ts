@@ -11,10 +11,10 @@ export interface Alumnus {
   name: string;
   email: string;
   company?: string;
-  job_title?: string;
+  role?: string;
+  domain?: string;
   graduation_year?: number;
   linkedin_profile_url?: string;
-  areas_of_expertise?: string[];
 }
 
 export interface Message {
