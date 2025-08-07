@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Target } from 'lucide-react';
-import { IconBooks } from '@tabler/icons-react';
+import { IconSchool } from '@tabler/icons-react';
 import styles from './VisionMission.module.css';
 
 export default function VisionMission() {
@@ -56,7 +56,7 @@ export default function VisionMission() {
           >
             <div className={styles.cardHeader}>
               <div className={`${styles.cardIcon} ${styles.cardIconMission}`}>
-                <IconBooks size={24} className={styles.iconMission} />
+                <IconSchool size={24} className={styles.iconMission} />
               </div>
               <h3 className={styles.cardTitle}>Mission</h3>
             </div>

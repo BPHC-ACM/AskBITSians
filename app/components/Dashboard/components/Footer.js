@@ -12,7 +12,7 @@ const colors = {
 };
 
 export default function Footer({ setActiveSection }) {
-  const exploreLinks = ['community', 'messages', 'resources'];
+  const exploreLinks = ['community', 'messages', 'alumni'];
   const quickLinks = [
     { name: 'Terms of Service', path: '/terms-of-service' },
     { name: 'Privacy Policy', path: '/privacy-policy' },

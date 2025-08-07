@@ -14,7 +14,6 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   images: {
-    domains: ['ui-avatars.com', 'img.icons8.com'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -26,12 +25,8 @@ const nextConfig = {
       },
     ],
     dangerouslyAllowSVG: true,
-    contentSecurityPolicy: `
-		default-src 'self';
-		img-src * data: blob:;
-		script-src 'self' 'unsafe-eval' 'unsafe-inline';
-		sandbox;
-	  `,
+    contentSecurityPolicy:
+      "default-src 'self'; img-src * data: blob:; script-src 'self' 'unsafe-eval' 'unsafe-inline';",
     // Add image optimization
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60 * 60 * 24 * 7, // 7 days

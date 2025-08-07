@@ -1,0 +1,203 @@
+/* Custom Select Component Styles */
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.selectTrigger {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  background-color: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  outline: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  color: #2d3748;
+}
+
+.selectTrigger:hover {
+  border-color: #fdc939;
+}
+
+.selectTrigger:focus {
+  border-color: #85c5e8;
+  box-shadow: 0 0 0 3px rgba(133, 197, 232, 0.1);
+}
+
+.selectTrigger[data-disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.selectTrigger[data-placeholder] {
+  color: #a0aec0;
+}
+
+.selectContent {
+  min-width: var(--radix-select-trigger-width);
+  width: var(--radix-select-trigger-width);
+  overflow: hidden;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 501;
+  animation-duration: 400ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+[data-state='open'].selectContent {
+  animation-name: slideDownAndFade;
+}
+
+[data-state='closed'].selectContent {
+  animation-name: slideUpAndFade;
+}
+
+.selectViewport {
+  padding: 5px;
+}
+
+.selectItem {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #2d3748;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+  user-select: none;
+  border-radius: 4px;
+}
+
+.selectItem[data-highlighted='true'] {
+  background-color: #f0f9ff;
+  color: #0369a1;
+}
+
+.selectItem[data-state='checked'] {
+  font-weight: 600;
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.selectIndicator {
+  color: #85c5e8;
+}
+
+.scrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  background-color: white;
+  color: #718096;
+  cursor: default;
+}
+
+/* Animations */
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+}
+
+/* Dark theme support for modal contexts */
+.darkTheme .selectTrigger {
+  background-color: #333;
+  border-color: #444;
+  color: #fff;
+}
+
+.darkTheme .selectTrigger:hover {
+  border-color: #fdc939;
+}
+
+.darkTheme .selectTrigger:focus {
+  border-color: #85c5e8;
+  box-shadow: 0 0 0 3px rgba(133, 197, 232, 0.2);
+}
+
+.darkTheme .selectTrigger[data-placeholder] {
+  color: #9ca3af;
+}
+
+.darkTheme .selectContent {
+  background-color: #2d3748;
+  border-color: #4a5568;
+}
+
+.darkTheme .selectItem {
+  color: #e2e8f0;
+}
+
+.darkTheme .selectItem[data-highlighted='true'] {
+  background-color: #374151;
+  color: #fdc939;
+}
+
+.darkTheme .selectItem[data-state='checked'] {
+  background-color: #1a202c;
+  color: #85c5e8;
+}
+
+.darkTheme .scrollButton {
+  background-color: #2d3748;
+  color: #9ca3af;
+}
+
+.darkTheme .label {
+  color: #e2e8f0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .selectTrigger {
+    padding: 0.875rem 0.75rem;
+    font-size: 1rem;
+  }
+
+  .selectItem {
+    padding: 0.875rem 0.75rem;
+    font-size: 1rem;
+  }
+}

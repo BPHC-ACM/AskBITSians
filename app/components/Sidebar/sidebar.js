@@ -16,8 +16,8 @@ import {
   IconUsers,
   IconMessages,
   IconBubbleText,
+  IconHome,
   IconSchool,
-  IconBooks,
   IconLogout,
   IconMenu2,
   IconLayoutSidebarLeftCollapse,
@@ -107,7 +107,7 @@ const Sidebar = forwardRef(function Sidebar(
   const sections = [
     {
       name: 'Dashboard',
-      icon: <IconSchool size={24} className={styles.navIcon} />,
+      icon: <IconHome size={24} className={styles.navIcon} />,
       sectionId: 'dashboard',
     },
     {
@@ -121,14 +121,14 @@ const Sidebar = forwardRef(function Sidebar(
       sectionId: 'community',
     },
     {
-      name: user?.role === 'alumnus' ? 'Student Requests' : 'Resources',
+      name: user?.role === 'alumnus' ? 'Student Requests' : 'Alumni',
       icon:
         user?.role === 'alumnus' ? (
           <IconBubbleText size={24} className={styles.navIcon} />
         ) : (
-          <IconBooks size={24} className={styles.navIcon} />
+          <IconSchool size={24} className={styles.navIcon} />
         ),
-      sectionId: user?.role === 'alumnus' ? 'requests' : 'resources',
+      sectionId: user?.role === 'alumnus' ? 'requests' : 'alumni',
     },
   ];
 
@@ -136,7 +136,7 @@ const Sidebar = forwardRef(function Sidebar(
     if (section.sectionId === 'requests' && user?.role !== 'alumnus') {
       return false;
     }
-    if (section.sectionId === 'resources' && user?.role === 'alumnus') {
+    if (section.sectionId === 'alumni' && user?.role === 'alumnus') {
       return false;
     }
     return true;

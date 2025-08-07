@@ -2,13 +2,13 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { IconUsers, IconMessages, IconBooks } from '@tabler/icons-react';
+import { IconUsers, IconMessages, IconSchool } from '@tabler/icons-react';
 import styles from './Services.module.css';
 import { servicesData } from './servicesData';
 import ServiceCard from './ServiceCard';
 
 export default function Services({ setActiveSection, setModalContent }) {
-  const icons = { forum: IconUsers, chat: IconMessages, resources: IconBooks };
+  const icons = { forum: IconUsers, chat: IconMessages, alumni: IconSchool };
   const colors = {
     bitsBlue: '#85C5E8',
     bitsGold: '#FDC939',

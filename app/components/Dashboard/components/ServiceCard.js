@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import {
   IconUsers,
   IconMessages,
-  IconBooks,
+  IconSchool,
   IconArrowRight,
   IconInfoCircle,
 } from '@tabler/icons-react';
@@ -14,7 +14,7 @@ import styles from './ServiceCard.module.css';
 // This is now a self-contained, performant component
 const ServiceCard = React.memo(
   ({ service, index, onShowMore, setActiveSection, icons, cardColor }) => {
-    const IconComponent = icons[service.icon] || IconBooks;
+    const IconComponent = icons[service.icon] || IconSchool;
 
     const getServiceActionProps = (serviceType) => {
       // ... (This function can remain the same or be moved to the parent)
@@ -31,11 +31,11 @@ const ServiceCard = React.memo(
             ButtonIcon: IconMessages,
             targetSection: 'messages',
           };
-        case 'resources':
+        case 'alumni':
           return {
-            buttonText: 'Resources',
-            ButtonIcon: IconBooks,
-            targetSection: 'resources',
+            buttonText: 'Alumni',
+            ButtonIcon: IconSchool,
+            targetSection: 'alumni',
           };
         default:
           return {

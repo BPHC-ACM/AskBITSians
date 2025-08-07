@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import styles from './update-profile-modal.module.css';
 import { IconX } from '@tabler/icons-react';
 import { useUser } from '@/context/userContext';
+import CustomSelect from '../common/CustomSelect';
 import {
   profileUpdated,
   error as showError,
@@ -223,67 +224,43 @@ export default function UpdateAlumniProfileModal({
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor='role'>Role *</label>
-              <select
-                id='role'
+              <CustomSelect
                 value={formData.role}
-                onChange={(e) => handleInputChange('role', e.target.value)}
-                required
-                disabled={isLoadingCategories}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #444',
-                  borderRadius: '6px',
-                  backgroundColor: '#333',
-                  color: '#fff',
-                  fontSize: '1rem',
-                  fontFamily: 'Poppins, sans-serif',
-                }}
-              >
-                <option value=''>
-                  {isLoadingCategories
+                onValueChange={(value) => handleInputChange('role', value)}
+                options={roleOptions.map((role) => ({
+                  value: role,
+                  label: role,
+                }))}
+                placeholder={
+                  isLoadingCategories
                     ? 'Loading roles...'
-                    : 'Select your role...'}
-                </option>
-                {roleOptions.map((role, index) => (
-                  <option key={index} value={role}>
-                    {role}
-                  </option>
-                ))}
-              </select>
+                    : 'Select your role...'
+                }
+                disabled={isLoadingCategories}
+                label='Role *'
+                className={styles.darkTheme}
+                aria-label='Select role'
+              />
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor='domain'>Domain *</label>
-              <select
-                id='domain'
+              <CustomSelect
                 value={formData.domain}
-                onChange={(e) => handleInputChange('domain', e.target.value)}
-                required
-                disabled={isLoadingCategories}
-                style={{
-                  width: '100%',
-                  padding: '0.75rem',
-                  border: '1px solid #444',
-                  borderRadius: '6px',
-                  backgroundColor: '#333',
-                  color: '#fff',
-                  fontSize: '1rem',
-                  fontFamily: 'Poppins, sans-serif',
-                }}
-              >
-                <option value=''>
-                  {isLoadingCategories
+                onValueChange={(value) => handleInputChange('domain', value)}
+                options={domainOptions.map((domain) => ({
+                  value: domain,
+                  label: domain,
+                }))}
+                placeholder={
+                  isLoadingCategories
                     ? 'Loading domains...'
-                    : 'Select your domain...'}
-                </option>
-                {domainOptions.map((domain, index) => (
-                  <option key={index} value={domain}>
-                    {domain}
-                  </option>
-                ))}
-              </select>
+                    : 'Select your domain...'
+                }
+                disabled={isLoadingCategories}
+                label='Domain *'
+                className={styles.darkTheme}
+                aria-label='Select domain'
+              />
             </div>
 
             <div className={styles.formGroup}>

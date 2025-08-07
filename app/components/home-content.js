@@ -7,7 +7,7 @@ import Section1 from './Dashboard/section1';
 import Section2 from './Requests/section2';
 import Section3 from './Chats/section3';
 import Section4 from './Forum/section4';
-import Section5 from './Resources/section5';
+import Section5 from './Alumni/section5';
 import Sidebar from './Sidebar/sidebar';
 import ScrollToTop from './ScrollToTop/scroll-to-top';
 import { profileIncomplete } from './common/notification-service';
@@ -122,14 +122,14 @@ export default function HomeContent() {
             <Section4 key='community' />
           </Suspense>
         );
-      case 'resources':
+      case 'alumni':
         return (
           <Suspense
             fallback={
-              <div className={pageStyles.loading}>Loading Resources...</div>
+              <div className={pageStyles.loading}>Loading Alumni...</div>
             }
           >
-            <Section5 key='resources' />
+            <Section5 key='alumni' />
           </Suspense>
         );
       case 'requests':

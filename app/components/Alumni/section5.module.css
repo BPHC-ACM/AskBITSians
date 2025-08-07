@@ -1,0 +1,780 @@
+/* Main Showcase Container */
+.showcaseContainer {
+  padding: 2rem 1rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.showcaseHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.showcaseTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #85c5e8;
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.showcaseDescription {
+  font-size: 1.125rem;
+  color: #4a5568;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Filter Section */
+.filterSection {
+  background: #f7fafc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid #e2e8f0;
+}
+
+/* Mobile Filter Toggle */
+.mobileFilterToggle {
+  display: none;
+  margin-top: 1rem;
+}
+
+.filterToggleButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: #85c5e8;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  justify-content: space-between;
+}
+
+.filterToggleButton:hover {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+.filtersVisible,
+.filtersHidden {
+  transition: all 0.3s ease;
+}
+
+.filtersVisible {
+  padding-top: 1.5rem;
+}
+
+.filtersHidden {
+  padding-top: 0;
+}
+
+.searchContainer {
+  margin-bottom: 1.5rem;
+}
+
+.searchInputWrapper {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #85c5e8;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+  color: #2d3748;
+  transition: all 0.2s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #85c5e8;
+  box-shadow: 0 0 0 3px rgba(133, 197, 232, 0.1);
+}
+
+.searchInput::placeholder {
+  color: #a0aec0;
+}
+
+.filtersRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  align-items: end;
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filterLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-family: 'Poppins', sans-serif;
+}
+
+.filterSelect {
+  padding: 0.75rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  background: white;
+  font-size: 0.875rem;
+  font-family: 'Poppins', sans-serif;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: #85c5e8;
+  box-shadow: 0 0 0 3px rgba(133, 197, 232, 0.1);
+}
+
+.filterSelect:hover {
+  border-color: #fdc939;
+}
+
+.sortGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sortButtons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.sortButton {
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  background: white;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-family: 'Poppins', sans-serif;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sortButton:hover {
+  border-color: #85c5e8;
+  background: #f7fafc;
+}
+
+.sortButton.active {
+  border-color: #85c5e8;
+  background: #85c5e8;
+  color: white;
+}
+
+.resetButton {
+  padding: 0.75rem 1.5rem;
+  background: #ea1425;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: end;
+}
+
+.resetButton:hover {
+  background: #c53030;
+  transform: translateY(-1px);
+}
+
+/* Stats Bar */
+.statsBar {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: #85c5e8;
+  border: 2px solid #fdc939;
+  border-radius: 12px;
+  color: white;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Groups Container */
+.groupsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.alumniGroup {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.groupHeader {
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 1rem;
+}
+
+.groupTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2d3748;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.groupCount {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #718096;
+  background: #edf2f7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Alumni Grid */
+.alumniGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 1200px) {
+  .alumniGrid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .alumniGrid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+}
+
+/* Desktop: Always show filters */
+@media (min-width: 769px) {
+  .mobileFilterToggle {
+    display: none !important;
+  }
+  
+  .filtersRow {
+    display: grid !important;
+    height: auto !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
+
+/* Alumni Card */
+.alumniCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Responsive card padding */
+@media (max-width: 768px) {
+  .alumniCard {
+    padding: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .alumniCard {
+    padding: 1rem;
+  }
+}
+
+.alumniCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    #fdc939 0%,
+    #fdc939 33.33%,
+    #ea1425 33.33%,
+    #ea1425 66.66%,
+    #85c5e8 66.66%,
+    #85c5e8 100%
+  );
+}
+
+.alumniCard:hover {
+  border-color: #85c5e8;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #85c5e8;
+  border: 2px solid #fdc939;
+  flex-shrink: 0;
+}
+
+/* Responsive avatar sizing */
+@media (max-width: 768px) {
+  .avatar {
+    width: 50px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .avatar {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+.nameSection {
+  flex: 1;
+  min-width: 0;
+}
+
+.alumniName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #2d3748;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* Responsive name sizing */
+@media (max-width: 768px) {
+  .alumniName {
+    font-size: 1.125rem;
+    white-space: normal;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 480px) {
+  .alumniName {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+.graduationYear {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #718096;
+  font-family: 'Poppins', sans-serif;
+  margin-top: 0.25rem;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.infoIcon {
+  color: #85c5e8;
+  flex-shrink: 0;
+}
+
+.infoLabel {
+  color: #718096;
+  font-weight: 500;
+  min-width: 60px;
+}
+
+.infoValue {
+  color: #2d3748;
+  font-weight: 600;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardFooter {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.linkedinLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #0077b5;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.linkedinLink:hover {
+  color: #005885;
+}
+
+/* Loading States */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e2e8f0;
+  border-top: 4px solid #85c5e8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  font-size: 1.125rem;
+  color: #718096;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Error States */
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.errorText {
+  font-size: 1.125rem;
+  color: #ea1425;
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.retryButton {
+  padding: 0.75rem 1.5rem;
+  background: #85c5e8;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.retryButton:hover {
+  background: #2b6cb0;
+  transform: translateY(-1px);
+}
+
+/* No Results */
+.noResultsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.noResultsIcon {
+  color: #cbd5e0;
+  margin-bottom: 1rem;
+}
+
+.noResultsTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+}
+
+.noResultsText {
+  font-size: 1rem;
+  color: #718096;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .showcaseContainer {
+    padding: 1.5rem 1rem;
+  }
+
+  .showcaseTitle {
+    font-size: 2.25rem;
+  }
+
+  .filtersRow {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .showcaseContainer {
+    padding: 1rem 0.5rem; /* Reduced horizontal padding */
+  }
+
+  .showcaseTitle {
+    font-size: 2rem;
+  }
+
+  .filterSection {
+    padding: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  /* Show mobile filter toggle and hide filters by default */
+  .mobileFilterToggle {
+    display: block;
+  }
+
+  .filtersRow {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .filtersHidden {
+    height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden;
+  }
+
+  .filterGroup {
+    min-width: auto;
+  }
+
+  .sortButtons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .statsBar {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+    padding: 0.75rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  .alumniGrid {
+    grid-template-columns: 1fr;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    gap: 1rem; /* Reduced gap */
+  }
+
+  .groupTitle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 1.375rem;
+  }
+
+  .alumniGroup {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    padding: 1.5rem 1rem; /* Reduced horizontal padding */
+  }
+}
+
+@media (max-width: 480px) {
+  .showcaseContainer {
+    padding: 0.75rem 0.25rem; /* Further reduced padding */
+  }
+
+  .showcaseTitle {
+    font-size: 1.75rem;
+  }
+
+  .showcaseDescription {
+    font-size: 1rem;
+  }
+
+  .filterSection {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .infoItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .infoLabel {
+    min-width: auto;
+    font-size: 0.8rem;
+  }
+
+  .infoValue {
+    font-size: 0.875rem;
+    white-space: normal;
+  }
+
+  .graduationYear {
+    justify-content: center;
+  }
+
+  .alumniGrid {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+    gap: 0.75rem;
+  }
+
+  .statsBar {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+
+  .alumniGroup {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 1rem 0.75rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .showcaseContainer {
+    padding: 0.5rem 0.125rem; /* Minimal padding for very small screens */
+  }
+
+  .showcaseTitle {
+    font-size: 1.5rem;
+  }
+
+  .alumniCard {
+    padding: 0.75rem;
+  }
+
+  .cardHeader {
+    gap: 0.5rem;
+  }
+
+  .cardBody {
+    gap: 0.5rem;
+  }
+
+  .filterSection {
+    margin-left: 0.125rem;
+    margin-right: 0.125rem;
+    padding: 0.75rem;
+  }
+
+  .alumniGrid {
+    margin-left: 0.125rem;
+    margin-right: 0.125rem;
+    gap: 0.5rem;
+  }
+
+  .statsBar {
+    margin-left: 0.125rem;
+    margin-right: 0.125rem;
+  }
+
+  .alumniGroup {
+    padding: 0.75rem 0.5rem;
+  }
+}

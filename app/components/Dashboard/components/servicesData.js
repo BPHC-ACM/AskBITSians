@@ -24,15 +24,15 @@ export const servicesData = [
     icon: 'forum',
   },
   {
-    heading: 'Resource Hub',
+    heading: 'Alumni Showcase',
     short_description:
-      'Access curated resources and insights from the BITS alumni network.',
+      'Explore the journeys and achievements of BITS alumni across diverse fields.',
     long_description: [
-      'Career Playbooks: Comprehensive guides on different career paths, prepared by successful alumni.',
-      'Interview Experiences: Real interview experiences and preparation tips from alumni at top companies.',
-      'Industry Reports: Insights and trends shared by alumni working in various industries.',
-      'Career Resources: Tools and frameworks to make the most of your journey.',
+      'Inspiring Stories: Discover personal and professional journeys of our distinguished alumni.',
+      'Career Highlights: Learn about notable milestones and roles held by BITS graduates.',
+      'Field Diversity: See how alumni have excelled in tech, consulting, entrepreneurship, research, and more.',
+      'Alumni Spotlights: Get to know individuals who continue to make a mark globally.',
     ],
-    icon: 'resources',
+    icon: 'alumni',
   },
 ];
