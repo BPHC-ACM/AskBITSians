@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import * as Select from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import styles from './custom-select.module.css';

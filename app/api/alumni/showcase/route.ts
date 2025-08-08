@@ -35,9 +35,8 @@ export async function GET(request: Request) {
 
     // Apply search filter
     if (search) {
-      query = query.or(
-        `name.ilike.%${search}%,company.ilike.%${search}%,role.ilike.%${search}%,domain.ilike.%${search}%`
-      );
+      // Use a proper filter that works with Supabase
+      query = query.or(`name.ilike.%${search}%,company.ilike.%${search}%`);
     }
 
     // Apply sorting

@@ -33,6 +33,10 @@
   color: #2d3748;
 }
 
+.selectTrigger svg {
+  padding-top: 0.25rem;
+}
+
 .selectTrigger:hover {
   border-color: #fdc939;
 }
@@ -52,6 +56,7 @@
 }
 
 .selectContent {
+  max-height: var(--radix-select-content-available-height);
   min-width: var(--radix-select-trigger-width);
   width: var(--radix-select-trigger-width);
   overflow: hidden;
@@ -74,6 +79,7 @@
 }
 
 .selectViewport {
+  overflow-y: auto;
   padding: 5px;
 }
 
@@ -93,7 +99,7 @@
   border-radius: 4px;
 }
 
-.selectItem[data-highlighted='true'] {
+.selectItem[data-highlighted] {
   background-color: #f0f9ff;
   color: #0369a1;
 }
@@ -106,6 +112,7 @@
 
 .selectIndicator {
   color: #85c5e8;
+  margin-bottom: -0.25rem;
 }
 
 .scrollButton {
@@ -118,7 +125,6 @@
   cursor: default;
 }
 
-/* Animations */
 @keyframes slideDownAndFade {
   from {
     opacity: 0;
@@ -170,7 +176,7 @@
   color: #e2e8f0;
 }
 
-.darkTheme .selectItem[data-highlighted='true'] {
+.darkTheme .selectItem[data-highlighted] {
   background-color: #374151;
   color: #fdc939;
 }
@@ -189,7 +195,6 @@
   color: #e2e8f0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .selectTrigger {
     padding: 0.875rem 0.75rem;
