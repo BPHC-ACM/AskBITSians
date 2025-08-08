@@ -16,12 +16,12 @@ export const colors = {
 
 export const fontStyles = {
   heading: {
-    fontFamily: `system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif`,
+    fontFamily: `'Poppins', sans-serif`,
     fontWeight: 700,
     letterSpacing: '-0.02em',
   },
   body: {
-    fontFamily: `'Inter', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial`,
+    fontFamily: `'Poppins', sans-serif`,
     lineHeight: 1.7,
   },
 };
