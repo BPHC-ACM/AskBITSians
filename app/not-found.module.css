@@ -6,7 +6,7 @@
   justify-content: center;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   padding: 2rem 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .content {
@@ -50,7 +50,7 @@
 .digit {
   font-size: 5rem;
   font-weight: 800;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   line-height: 1;
   animation: bounce 2s ease-in-out infinite;
 }
@@ -92,7 +92,7 @@
   font-weight: 700;
   color: #2d3748;
   margin-bottom: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .description {
@@ -100,7 +100,7 @@
   color: #718096;
   line-height: 1.6;
   margin-bottom: 1.5rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .bitsMessage {
@@ -114,7 +114,7 @@
 .bitsMessage p {
   color: #2d3748;
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   margin: 0;
 }
 
@@ -136,7 +136,7 @@
   padding: 0.875rem 1.5rem;
   border-radius: 10px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   text-decoration: none;
   transition: all 0.3s ease;
   border: 2px solid #85c5e8;
@@ -159,7 +159,7 @@
   border: 2px solid #e2e8f0;
   border-radius: 10px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -181,7 +181,7 @@
   font-weight: 600;
   color: #2d3748;
   margin-bottom: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .linkGrid {
@@ -201,7 +201,7 @@
   color: #4a5568;
   font-size: 0.875rem;
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   text-decoration: none;
   transition: all 0.2s ease;
 }
@@ -240,7 +240,7 @@
   color: #718096;
   font-size: 0.875rem;
   font-style: italic;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   margin: 0;
 }
 

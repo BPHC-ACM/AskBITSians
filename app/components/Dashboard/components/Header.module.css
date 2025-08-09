@@ -38,7 +38,7 @@
 }
 
 .h1 {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 700;
   letter-spacing: -0.02em;
   font-size: 4.2rem;
@@ -55,7 +55,7 @@
 }
 
 .paragraph {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   line-height: 1.7;
   font-size: 1.1rem;
   max-width: 36rem;
@@ -134,6 +134,6 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   z-index: 50;
 }

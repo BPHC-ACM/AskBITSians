@@ -20,7 +20,7 @@
 	max-width: 450px;
 	position: relative;
 	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-	font-family: 'Poppins', sans-serif;
+	font-family: var(--font-poppins), sans-serif;
 }
 
 .closeButton {
@@ -78,7 +78,7 @@
 	background-color: #333;
 	color: #fff;
 	font-size: 1rem;
-	font-family: 'Poppins', sans-serif;
+	font-family: var(--font-poppins), sans-serif;
 }
 .formGroup input::placeholder {
 	color: #888;

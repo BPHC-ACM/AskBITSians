@@ -48,7 +48,7 @@
   align-items: center;
   justify-content: center;
   min-height: 200px;
-  font-family: 'Poppins', Arial, sans-serif;
+  font-family: var(--font-poppins), Arial, sans-serif;
   color: #6b7280;
   font-size: 14px;
 }

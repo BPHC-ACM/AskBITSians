@@ -1,7 +1,7 @@
 .button {
   padding: 0 1.5rem;
   height: 2.5rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-display: swap;
   background-color: transparent;
   color: #3b82f6;
@@ -34,7 +34,7 @@
 
 .buttonSecondary {
   padding: 0.75rem 1.5rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-display: swap;
   background-color: transparent;
   color: #222;
@@ -123,7 +123,7 @@
 }
 
 .input {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   width: 100%;
   padding: 0.75rem;
   border: 1px solid #e5e7eb;
@@ -140,7 +140,7 @@
 }
 
 .textarea {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   min-height: 120px;
   resize: vertical;
   width: 100%;
@@ -186,7 +186,7 @@
 }
 
 .tab {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   flex: 1;
   padding: 0.75rem 1rem;
   border: none;
@@ -212,7 +212,7 @@
 }
 
 .selectTrigger {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -255,7 +255,7 @@
 }
 
 .selectItem {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;

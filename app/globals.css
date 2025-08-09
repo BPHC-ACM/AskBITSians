@@ -29,6 +29,15 @@ body {
   margin: 0;
 }
 
+/* Ensure Poppins is applied to all interactive elements */
+button,
+input,
+textarea,
+select,
+label {
+  font-family: var(--font-poppins), Arial, Helvetica, sans-serif;
+}
+
 a {
   color: inherit;
   text-decoration: none;

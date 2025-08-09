@@ -32,7 +32,7 @@
 
 .serviceTitle {
   /* FONT FIX: Add the font-family from the original fontStyles.heading */
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
   color: #1a202c; /* dark */
@@ -42,7 +42,7 @@
 
 .serviceDescription {
   /* FONT FIX: Add the font-family from the original fontStyles.body */
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-size: 1rem;
   color: #718096; /* gray */
   line-height: 1.6;
@@ -59,7 +59,7 @@
 .actionButton,
 .learnMoreButton {
   /* FONT FIX: Add the font-family from the original fontStyles.body */
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   flex-grow: 1;
   display: inline-flex;
   align-items: center;

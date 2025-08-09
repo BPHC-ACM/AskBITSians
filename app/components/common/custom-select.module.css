@@ -11,12 +11,12 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #2d3748;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   margin-bottom: 0.5rem;
 }
 
 .selectTrigger {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -84,7 +84,7 @@
 }
 
 .selectItem {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   display: flex;
   align-items: center;
   justify-content: space-between;

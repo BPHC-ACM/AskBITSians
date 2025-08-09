@@ -3,7 +3,7 @@
   padding: 2rem 1rem;
   max-width: 1400px;
   margin: 0 auto;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .showcaseHeader {
@@ -16,7 +16,7 @@
   font-weight: 700;
   color: #85c5e8;
   margin-bottom: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .showcaseDescription {
@@ -25,7 +25,7 @@
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 /* Filter Section */
@@ -53,7 +53,7 @@
   color: white;
   border: none;
   border-radius: 8px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
   cursor: pointer;
@@ -102,7 +102,7 @@
   width: 100%;
   padding: 1rem 1rem 1rem 3rem;
   font-size: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   border: 2px solid #e2e8f0;
   border-radius: 8px;
   background: white;
@@ -140,7 +140,7 @@
   font-size: 0.875rem;
   font-weight: 600;
   color: #2d3748;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .filterSelect {
@@ -149,7 +149,7 @@
   border-radius: 6px;
   background: white;
   font-size: 0.875rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   color: #2d3748;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -182,7 +182,7 @@
   background: white;
   border-radius: 6px;
   font-size: 0.875rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   color: #2d3748;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -206,7 +206,7 @@
   border: none;
   border-radius: 6px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
   align-self: end;
@@ -235,7 +235,7 @@
   align-items: center;
   gap: 0.5rem;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 /* Groups Container */
@@ -263,7 +263,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: #2d3748;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -276,7 +276,7 @@
   background: #edf2f7;
   padding: 0.25rem 0.75rem;
   border-radius: 20px;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 /* Alumni Grid */
@@ -404,7 +404,7 @@
   font-weight: 700;
   color: #2d3748;
   margin: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -433,7 +433,7 @@
   gap: 0.5rem;
   font-size: 0.875rem;
   color: #718096;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   margin-top: 0.25rem;
 }
 
@@ -448,7 +448,7 @@
   align-items: center;
   gap: 0.75rem;
   font-size: 0.875rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .infoIcon {
@@ -524,7 +524,7 @@
 .loadingText {
   font-size: 1.125rem;
   color: #718096;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 /* Error States */
@@ -541,7 +541,7 @@
   font-size: 1.125rem;
   color: #ea1425;
   margin-bottom: 1rem;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
 }
 
 .retryButton {
@@ -551,7 +551,7 @@
   border: none;
   border-radius: 6px;
   font-weight: 600;
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--font-poppins), sans-serif;
   cursor: pointer;
   transition: all 0.2s ease;
 }
