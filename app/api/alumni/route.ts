@@ -13,7 +13,15 @@ export async function GET(request) {
 
     // If ID is specified, fetch specific alumni
     if (id) {
-      query = query.eq('id', id);
+      const { data, error } = await supabase
+        .from('alumni')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
+
+      return NextResponse.json(data);
     }
 
     if (domain) {

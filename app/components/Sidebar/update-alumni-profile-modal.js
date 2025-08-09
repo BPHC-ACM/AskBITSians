@@ -17,6 +17,7 @@ export default function UpdateAlumniProfileModal({
   onUpdateSuccess,
 }) {
   const { user, loading: userLoading, refetchUser } = useUser();
+
   let idFromContext = null;
   if (user && user.role === 'alumnus' && user.id && user.id !== 'unknown') {
     idFromContext = user.id;
@@ -48,14 +49,16 @@ export default function UpdateAlumniProfileModal({
 
       // Fetch categories when modal opens
       fetchCategories();
+    }
+  }, [isOpen, user, userLoading, alumniId]);
 
-      // Load existing data if available
-      if (!userLoading && user && user.role === 'alumnus') {
-        // Fetch current alumni data to populate form
+  useEffect(() => {
+    if (isOpen && !userLoading && user && user.role === 'alumnus' && alumniId) {
+      if (roleOptions.length > 0 && domainOptions.length > 0) {
         fetchAlumniData();
       }
     }
-  }, [isOpen, user, userLoading]);
+  }, [isOpen, user, userLoading, alumniId, roleOptions, domainOptions]);
 
   const fetchCategories = async () => {
     setIsLoadingCategories(true);
@@ -75,14 +78,24 @@ export default function UpdateAlumniProfileModal({
   };
 
   const fetchAlumniData = async () => {
-    if (!alumniId) return;
+    if (!alumniId) {
+      return;
+    }
 
     try {
       const response = await fetch(`/api/alumni?id=${alumniId}`);
+
       if (response.ok) {
         const data = await response.json();
-        if (data.length > 0) {
-          const alumni = data[0];
+
+        let alumni = null;
+        if (Array.isArray(data)) {
+          alumni = data.length > 0 ? data[0] : null;
+        } else if (data && typeof data === 'object') {
+          alumni = data;
+        }
+
+        if (alumni) {
           setFormData({
             company: alumni.company || '',
             role: alumni.role || '',
@@ -91,6 +104,9 @@ export default function UpdateAlumniProfileModal({
             linkedin_profile_url: alumni.linkedin_profile_url || '',
           });
         }
+      } else {
+        const errorData = await response.json();
+        console.error('Error fetching alumni data:', errorData);
       }
     } catch (error) {
       console.error('Error fetching alumni data:', error);

@@ -15,6 +15,7 @@ export default function UpdateProfileModal({
   onUpdateSuccess,
 }) {
   const { user, loading: userLoading } = useUser();
+
   let idFromContext = null;
   if (user && user.role === 'student' && user.id && user.id !== 'unknown') {
     idFromContext = user.id;
@@ -34,22 +35,37 @@ export default function UpdateProfileModal({
       setIsLoading(false);
 
       // Load existing data if available
-      if (!userLoading && user && user.role === 'student') {
+      if (!userLoading && user && user.role === 'student' && studentId) {
         fetchStudentData();
       }
     }
-  }, [isOpen, user, userLoading]);
+  }, [isOpen, user, userLoading, studentId]);
 
   const fetchStudentData = async () => {
-    if (!studentId) return;
+    if (!studentId) {
+      return;
+    }
 
     try {
       const response = await fetch(`/api/students?id=${studentId}`);
+
       if (response.ok) {
         const data = await response.json();
+
         setBranch(data.branch || '');
         setCgpa(data.cgpa?.toString() || '');
-        setBatch(data.batch?.toString() || '');
+
+        let extractedBatch = '';
+        if (data.identifier) {
+          const yearMatch = data.identifier.match(/^(\d{4})/);
+          if (yearMatch) {
+            extractedBatch = yearMatch[1];
+          }
+        }
+        setBatch(extractedBatch || '');
+      } else {
+        const errorData = await response.json();
+        console.error('Error fetching student data:', errorData);
       }
     } catch (error) {
       console.error('Error fetching student data:', error);

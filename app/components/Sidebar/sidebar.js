@@ -79,6 +79,13 @@ const Sidebar = forwardRef(function Sidebar(
   };
 
   const handleOpenUpdateModal = () => {
+    console.log('Sidebar: Opening update modal, user context:', {
+      user,
+      loading,
+      userId: user?.id,
+      userRole: user?.role,
+      userEmail: user?.email,
+    });
     setIsUpdateModalOpen(true);
     setShowUserActions(false);
   };
