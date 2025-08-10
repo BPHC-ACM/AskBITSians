@@ -132,7 +132,7 @@ function generateStudentIdentifier(name: string, email: string): string {
   // Extract year from email if possible, otherwise use placeholder
   const emailMatch = email.match(/f(\d{4})/);
   if (emailMatch) {
-    return `20${emailMatch[1].slice(-2)}XXXH`;
+    return `20${emailMatch[1].slice(-2)}XXH`;
   }
 
   // Fallback to generic format
